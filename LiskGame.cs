@@ -19,6 +19,8 @@ namespace viylouuInc_Launcher
         public int distBetwLines = 10;
 
         public wallObj[,] mapMat = new wallObj[1, 1];
+        public int maMaSX = 1;
+        public int maMaSY = 1;
 
         public bool started = false;
 
@@ -26,7 +28,11 @@ namespace viylouuInc_Launcher
         {
             if (!started)
             {
-                mapMat = new wallObj[Window.Width / pixSize / distBetwLines, Window.Height / pixSize / distBetwLines];
+                maMaSX = Window.Width / pixSize / distBetwLines;
+                maMaSY = Window.Height / pixSize / distBetwLines;
+
+                mapMat = new wallObj[maMaSX, maMaSY];
+
                 started = true;
             }
             else
@@ -66,12 +72,6 @@ namespace viylouuInc_Launcher
                         new Vector2(pixSize, pixSize), Alignment.Center
                     );
 
-                    canv.DrawText((int)Math.Round(Mouse.Position.X / pixdivdist) + " MPX", new Vector2(5, 5));
-                    canv.DrawText((int)Math.Round((Window.Height - Mouse.Position.Y) / pixdivdist) + " MPY", new Vector2(5, 20));
-
-                    canv.DrawText(Window.Width / pixSize / distBetwLines + " WSX", new Vector2(5, 50));
-                    canv.DrawText(Window.Height / pixSize / distBetwLines + " WSY", new Vector2(5, 65));
-
                     if (Mouse.IsButtonPressed(MouseButton.Left))
                     {
                         wallObj obj = new wallObj();
@@ -83,6 +83,27 @@ namespace viylouuInc_Launcher
                         obj.connectorYs = new int[] { 0 };
 
                         mapMat[(int)Math.Round(Mouse.Position.X / pixdivdist), (int)Math.Round((Window.Height - Mouse.Position.Y) / pixdivdist)] = obj;
+                    }
+
+                    canv.Fill(Color.White);
+
+                    for (int x = 0; x < maMaSX; x++)
+                    {
+                        for (int y = 0; y > maMaSY; y++)
+                        {
+                            if (mapMat[x, y] != null)
+                            {
+                                canv.DrawRect(
+
+                                    new Vector2(
+                                            x * pixdivdist,
+                                            x * pixdivdist
+                                        ),
+
+                                    new Vector2(pixSize, pixSize), Alignment.Center
+                                );
+                            }
+                        }
                     }
                 }
             }
