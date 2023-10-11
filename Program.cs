@@ -45,7 +45,6 @@ partial class Program : Simulation
     {
         name = "Cells",
         desc = "Cells is a simple cellulaur automata engine",
-        starter = new CellsGame().Start,
         updater = new CellsGame().Update,
         ver = 0.1f
     };
@@ -54,7 +53,6 @@ partial class Program : Simulation
     {
         name = "Lisk",
         desc = "Lisk is a 3d raycaster in the doom style",
-        starter = new LiskGame().Start,
         updater = new LiskGame().Update,
         ver = 0.0f
     };
@@ -88,9 +86,6 @@ partial class Program : Simulation
             cells,
             lisk
         };
-
-        //gameStarted = true;
-        //gameSelected = 1;
     }
 
     public override void OnRender(ICanvas canv)
@@ -366,7 +361,6 @@ partial class Program : Simulation
 
     class gameInfo
     {
-        public Action starter { get; set; }
         public Action updater { get; set; }
 
         public string desc { get; set; }

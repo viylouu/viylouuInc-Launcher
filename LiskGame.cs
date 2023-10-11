@@ -20,65 +20,70 @@ namespace viylouuInc_Launcher
 
         public wallObj[,] mapMat = new wallObj[1, 1];
 
-        public void Start()
-        { 
-            mapMat = new wallObj[Window.Width / pixSize / distBetwLines, Window.Height / pixSize / distBetwLines];
-        }
+        public bool started = false;
 
         public void Update()
         {
-            ICanvas canv = Graphics.GetOutputCanvas();
-
-            canv.Clear(new Color(71, 64, 92));
-
-            if (Keyboard.IsKeyPressed(Key.M))
-            { mapEditor = !mapEditor; }
-
-            if (mapEditor)
+            if (!started)
             {
-                canv.Fill(new Color(122, 103, 143));
+                mapMat = new wallObj[Window.Width / pixSize / distBetwLines, Window.Height / pixSize / distBetwLines];
+                started = true;
+            }
+            else
+            {
+                ICanvas canv = Graphics.GetOutputCanvas();
 
-                for (int x = 0; x < Window.Width / pixSize / distBetwLines + 1; x++)
+                canv.Clear(new Color(71, 64, 92));
+
+                if (Keyboard.IsKeyPressed(Key.M))
+                { mapEditor = !mapEditor; }
+
+                if (mapEditor)
                 {
-                    canv.DrawRect(new Vector2(x * pixSize * distBetwLines, Window.Height / 2), new Vector2(pixSize, Window.Height), Alignment.Center);
-                }
+                    canv.Fill(new Color(122, 103, 143));
 
-                for (int y = 0; y < Window.Height / pixSize / distBetwLines + 1; y++)
-                {
-                    canv.DrawRect(new Vector2(Window.Width / 2, y * pixSize * distBetwLines), new Vector2(Window.Width, pixSize), Alignment.Center);
-                }
+                    for (int x = 0; x < Window.Width / pixSize / distBetwLines + 1; x++)
+                    {
+                        canv.DrawRect(new Vector2(x * pixSize * distBetwLines, Window.Height / 2), new Vector2(pixSize, Window.Height), Alignment.Center);
+                    }
 
-                canv.Fill(new Color(255, 255, 255, 255));
+                    for (int y = 0; y < Window.Height / pixSize / distBetwLines + 1; y++)
+                    {
+                        canv.DrawRect(new Vector2(Window.Width / 2, y * pixSize * distBetwLines), new Vector2(Window.Width, pixSize), Alignment.Center);
+                    }
 
-                int pixdivdist = pixSize * distBetwLines;
+                    canv.Fill(new Color(255, 255, 255, 255));
 
-                canv.DrawRect(
+                    int pixdivdist = pixSize * distBetwLines;
 
-                    new Vector2(
-                            (float)Math.Round(Mouse.Position.X / pixdivdist) * pixdivdist,
-                            (float)Math.Round(Mouse.Position.Y / pixdivdist) * pixdivdist
-                        ), 
+                    canv.DrawRect(
 
-                    new Vector2(pixSize, pixSize), Alignment.Center
-                );
+                        new Vector2(
+                                (float)Math.Round(Mouse.Position.X / pixdivdist) * pixdivdist,
+                                (float)Math.Round(Mouse.Position.Y / pixdivdist) * pixdivdist
+                            ),
 
-                canv.DrawText((int)Math.Round(Mouse.Position.X / pixdivdist) + " MPX", new Vector2(5, 5));
-                canv.DrawText((int)Math.Round((Window.Height - Mouse.Position.Y) / pixdivdist) + " MPY", new Vector2(5, 20));
+                        new Vector2(pixSize, pixSize), Alignment.Center
+                    );
 
-                canv.DrawText(Window.Width / pixSize / distBetwLines + " WSX", new Vector2(5, 50));
-                canv.DrawText(Window.Height / pixSize / distBetwLines + " WSY", new Vector2(5, 65));
+                    canv.DrawText((int)Math.Round(Mouse.Position.X / pixdivdist) + " MPX", new Vector2(5, 5));
+                    canv.DrawText((int)Math.Round((Window.Height - Mouse.Position.Y) / pixdivdist) + " MPY", new Vector2(5, 20));
 
-                if (Mouse.IsButtonPressed(MouseButton.Left))
-                {
-                    wallObj obj = new wallObj();
+                    canv.DrawText(Window.Width / pixSize / distBetwLines + " WSX", new Vector2(5, 50));
+                    canv.DrawText(Window.Height / pixSize / distBetwLines + " WSY", new Vector2(5, 65));
 
-                    obj.connect = false;
-                    obj.connectorAmt = 0;
+                    if (Mouse.IsButtonPressed(MouseButton.Left))
+                    {
+                        wallObj obj = new wallObj();
 
-                    obj.connectorXs = new int[] { 0 };
-                    obj.connectorYs = new int[] { 0 };
+                        obj.connect = false;
+                        obj.connectorAmt = 0;
 
-                    mapMat[(int)Math.Round(Mouse.Position.X / pixdivdist), (int)Math.Round((Window.Height - Mouse.Position.Y) / pixdivdist)] = obj;
+                        obj.connectorXs = new int[] { 0 };
+                        obj.connectorYs = new int[] { 0 };
+
+                        mapMat[(int)Math.Round(Mouse.Position.X / pixdivdist), (int)Math.Round((Window.Height - Mouse.Position.Y) / pixdivdist)] = obj;
+                    }
                 }
             }
         }

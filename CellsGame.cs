@@ -115,25 +115,22 @@ namespace viylouuInc_Launcher
 
         public ITexture tex = null;
 
-        public void Start()
-        {
-            mSX = (int)Math.Round((double)Window.Width / pixSize);
-            mSY = (int)Math.Round((double)Window.Height / pixSize);
-
-            updMatrix = new bool[mSX, mSY];
-            matrix = new Cell[mSX, mSY];
-
-            lastItTime = DateTime.UtcNow;
-
-            tex = Graphics.CreateTexture(mSX, mSY, TextureOptions.None);
-
-            recentTexUpd = true;
-        }
-
         public void Update()
         {
             if (!strted)
             {
+                mSX = (int)Math.Round((double)Window.Width / pixSize);
+                mSY = (int)Math.Round((double)Window.Height / pixSize);
+
+                updMatrix = new bool[mSX, mSY];
+                matrix = new Cell[mSX, mSY];
+
+                lastItTime = DateTime.UtcNow;
+
+                tex = Graphics.CreateTexture(mSX, mSY, TextureOptions.None);
+
+                recentTexUpd = true;
+
                 cells = new Cell[] {
                     sand,
                     water,
