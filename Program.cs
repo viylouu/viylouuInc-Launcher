@@ -6,7 +6,6 @@ using NAudio.Wave;
 using SimulationFramework.Input;
 using ImGuiNET;
 
-
 Start<Program>();
 
 partial class Program : Simulation
