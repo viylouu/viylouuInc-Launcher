@@ -89,8 +89,8 @@ partial class Program : Simulation
             lisk
         };
 
-        gameStarted = true;
-        gameSelected = 1;
+        //gameStarted = true;
+        //gameSelected = 1;
     }
 
     public override void OnRender(ICanvas canv)
