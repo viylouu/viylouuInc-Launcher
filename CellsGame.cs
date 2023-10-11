@@ -18,6 +18,8 @@ namespace viylouuInc_Launcher
 
         public bool set = false;
 
+        public bool debugDrawRad = false;
+
         public bool debugMode = false;
 
         public Cell sand = new Cell {
@@ -312,7 +314,7 @@ namespace viylouuInc_Launcher
                 canv.DrawText(Math.Round(1 / Time.DeltaTime) + " FPS", new Vector2(5, 5), Alignment.TopLeft);
                 canv.DrawText(cellSel < cells.Length ? cells[cellSel].name : "null error", new Vector2(Window.Width - 5, 5), Alignment.TopRight);
 
-                if (debugMode)
+                if (debugMode && debugDrawRad)
                 {
                     canv.DrawText("<" + drawRad + "> drawSize", new Vector2(5, 30), Alignment.TopLeft);
                 }
@@ -353,6 +355,15 @@ namespace viylouuInc_Launcher
                     }
 
                     ImGui.End();
+
+                    if (debugMode)
+                    {
+                        ImGui.Begin("Debug Menu");
+
+                        ImGui.Checkbox("Show Draw Size", ref debugDrawRad);
+
+                        ImGui.End();
+                    }
                 }
             }
         }
