@@ -26,14 +26,23 @@ namespace viylouuInc_Launcher
         { txtCol = new Color(1, 3, 4), bgCol = new Color(211, 230, 248), priCol = new Color(34, 123, 206),
             secCol = new Color(203, 225, 246), accCol = new Color(186, 94, 110) };
 
+        public static colPallate darkBrown = new colPallate
+        { txtCol = new Color(234, 240, 239), bgCol = new Color(20, 26, 26), priCol = new Color(103, 76, 79),
+            secCol = new Color(33, 44, 43), accCol = new Color(157, 123, 127) };
+        public static colPallate lightBrown = new colPallate
+        { txtCol = new Color(15, 21, 20), bgCol = new Color(229, 235, 235), priCol = new Color(179, 152, 155),
+            secCol = new Color(211, 222, 221), accCol = new Color(132, 98, 102) };
+
         public static dlPallate green = new dlPallate { DarkMode = darkGreen, LightMode = lightGreen, name = "Mint" };
         public static dlPallate red = new dlPallate { DarkMode = darkRed, LightMode = lightRed, name = "Rose" };
         public static dlPallate blue = new dlPallate { DarkMode = darkBlue, LightMode = lightBlue, name = "Sapphire" };
+        public static dlPallate brown = new dlPallate { DarkMode = darkBrown, LightMode = lightBrown, name = "Wood" };
 
         public static dlPallate[] pallates = new dlPallate[] {
             green,
             red,
-            blue
+            blue,
+            brown
         };
 
         public void ApplyColors(ref Color txt, ref Color bg, ref Color pri, ref Color sec, ref Color acc, bool light, int pallate)
