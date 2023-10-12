@@ -87,6 +87,8 @@ namespace viylouuInc_Launcher
 
                     canv.Fill(Color.White);
 
+                    //fix not rendering bug tomorrow
+
                     for (int x = 0; x < maMaSX; x++)
                     {
                         for (int y = 0; y > maMaSY; y++)
