@@ -19,9 +19,9 @@ partial class Program : Simulation
     IFont smallTxt = null;
 
     WaveStream[] ins = new WaveStream[] {
-    new WaveFileReader(Directory.GetCurrentDirectory() + @"\Assets\Audio\buttonClick.wav"),
-    new WaveFileReader(Directory.GetCurrentDirectory() + @"\Assets\Audio\switchTab.wav")
-};
+        new WaveFileReader(Directory.GetCurrentDirectory() + @"\Assets\Audio\buttonClick.wav"),
+        new WaveFileReader(Directory.GetCurrentDirectory() + @"\Assets\Audio\switchTab.wav")
+    };
 
     WaveOutEvent[] outs = new WaveOutEvent[0];
 
