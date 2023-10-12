@@ -16,7 +16,7 @@ namespace viylouuInc_Launcher
         { txtCol = new Color(232, 250, 253), bgCol = new Color(1, 12, 14), priCol = new Color(102, 22, 10),
             secCol = new Color(55, 37, 6), accCol = new Color(233, 32, 106) };
         public static colPallate lightRed = new colPallate
-        { txtCol = new Color(2, 20, 23), bgCol = new Color(241, 252, 254), priCol = new Color(245, 165, 153),
+        { txtCol = new Color(2, 20, 23), bgCol = new Color(241, 252, 254), priCol = new Color(225, 165, 153),
             secCol = new Color(249, 231, 200), accCol = new Color(223, 22, 96) };
 
         public static colPallate darkBlue = new colPallate
@@ -41,15 +41,15 @@ namespace viylouuInc_Launcher
             secCol = new Color(225, 217, 213), accCol = new Color(211, 125, 39) };
 
         public static colPallate darkPurple = new colPallate
-        { txtCol = new Color(255, 245, 255), bgCol = new Color(40, 1, 38), priCol = new Color(99, 3, 97),
-            secCol = new Color(64, 2, 63), accCol = new Color(249, 21, 245) };
+        { txtCol = new Color(255, 225, 255), bgCol = new Color(40, 1, 38), priCol = new Color(99, 3, 97),
+            secCol = new Color(64, 2, 63), accCol = new Color(249, 21, 225) };
         public static colPallate lightPurple = new colPallate
         { txtCol = new Color(10, 0, 10), bgCol = new Color(254, 215, 252), priCol = new Color(252, 156, 250),
             secCol = new Color(253, 191, 252), accCol = new Color(234, 6, 230) };
 
         public static colPallate darkGray = new colPallate
         { txtCol = new Color(249, 250, 251), bgCol = new Color(9, 11, 16), priCol = new Color(74, 96, 130),
-            secCol = new Color(26, 33, 45), accCol = new Color(106, 130, 169) };
+            secCol = new Color(26, 33, 25), accCol = new Color(106, 130, 169) };
         public static colPallate lightGray = new colPallate
         { txtCol = new Color(4, 5, 6), bgCol = new Color(239, 241, 246), priCol = new Color(125, 147, 181),
             secCol = new Color(210, 217, 229), accCol = new Color(86, 110, 149) };
