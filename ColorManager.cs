@@ -77,6 +77,42 @@ namespace viylouuInc_Launcher
 
         public static dlPallate space = new dlPallate { DarkMode = darkspace, LightMode = lightspace, name = "Space" };
 
+        public static colPallate darkmelon = new colPallate
+        { txtCol = new Color(235, 255, 246), bgCol = new Color(0, 20, 12), priCol = new Color(253, 53, 136),
+            secCol = new Color(1, 60, 36), accCol = new Color(253, 13, 113) };
+        public static colPallate lightmelon = new colPallate
+        { txtCol = new Color(0, 20, 11), bgCol = new Color(235, 255, 247), priCol = new Color(202, 2, 85),
+            secCol = new Color(195, 254, 230), accCol = new Color(242, 2, 102) };
+
+        public static dlPallate melon = new dlPallate { DarkMode = darkmelon, LightMode = lightmelon, name = "Watermelon" };
+
+        public static colPallate darkppp = new colPallate
+        { txtCol = new Color(251, 248, 252), bgCol = new Color(33, 17, 34), priCol = new Color(145, 199, 142),
+            secCol = new Color(20, 10, 21), accCol = new Color(83, 157, 77) };
+        public static colPallate lightppp = new colPallate
+        { txtCol = new Color(6, 3, 7), bgCol = new Color(237, 221, 238), priCol = new Color(58, 113, 56),
+            secCol = new Color(244, 234, 245), accCol = new Color(104, 178, 98) };
+
+        public static dlPallate ppp = new dlPallate { DarkMode = darkppp, LightMode = lightppp, name = "Purpley Green" };
+
+        public static colPallate darkbluey = new colPallate
+        { txtCol = new Color(253, 231, 233), bgCol = new Color(24, 2, 3), priCol = new Color(123, 244, 236),
+            secCol = new Color(3, 6, 43), accCol = new Color(19, 231, 217) };
+        public static colPallate lightbluey = new colPallate
+        { txtCol = new Color(24, 2, 4), bgCol = new Color(253, 231, 232), priCol = new Color(11, 132, 124),
+            secCol = new Color(212, 215, 252), accCol = new Color(24, 236, 222) };
+
+        public static dlPallate bluey = new dlPallate { DarkMode = darkbluey, LightMode = lightbluey, name = "Bluey" };
+
+        public static colPallate darksnb = new colPallate
+        { txtCol = new Color(231, 239, 232), bgCol = new Color(4, 6, 4), priCol = new Color(163, 194, 185),
+            secCol = new Color(18, 12, 17), accCol = new Color(141, 94, 108) };
+        public static colPallate lightsbn = new colPallate
+        { txtCol = new Color(16, 24, 17), bgCol = new Color(249, 251, 249), priCol = new Color(61, 92, 83),
+            secCol = new Color(243, 237, 242), accCol = new Color(161, 114, 128) };
+
+        public static dlPallate snb = new dlPallate { DarkMode = darksnb, LightMode = lightsbn, name = "Soft n Bloo" };
+
         public static dlPallate[] pallates = new dlPallate[] {
             green,
             red,
@@ -85,7 +121,11 @@ namespace viylouuInc_Launcher
             orange,
             purple,
             gray,
-            space
+            space,
+            melon,
+            ppp,
+            bluey,
+            snb
         };
 
         public void ApplyColors(ref Color txt, ref Color bg, ref Color pri, ref Color sec, ref Color acc, bool light, int pallate)
