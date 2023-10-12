@@ -101,8 +101,8 @@ partial class Program : Simulation
             canv.Fill(g);
             canv.DrawRect(Vector2.Zero, new Vector2(Window.Width, Window.Height));
 
-            DrawModernBox(canv, new Vector2((Window.Width - 160) / 2 / 2 + 160 + 8, 60), new Vector2((Window.Width - 180) / 2 - 15, 80), 25, PRIMARY);
-            DrawModernBox(canv, new Vector2((Window.Width - 160) / 2 / 2 + 160 + (Window.Width - 160) / 2 - 5, 60), new Vector2((Window.Width - 190) / 2 - 15, 80), 25, PRIMARY);
+            DrawModernBox(canv, new Vector2((Window.Width - 160) / 2 / 2 + 160 + 8, 60), new Vector2((Window.Width - 180) / 2 - 15, 80), 45, PRIMARY);
+            DrawModernBox(canv, new Vector2((Window.Width - 160) / 2 / 2 + 160 + (Window.Width - 160) / 2 - 5, 60), new Vector2((Window.Width - 190) / 2 - 15, 80), 45, PRIMARY);
 
             canv.Fill(TEXT);
             canv.Font(smallTxt);
@@ -152,7 +152,7 @@ partial class Program : Simulation
 
             //soooooo messy
 
-            DrawModernBox(canv, new Vector2(Window.Width / 2 + 80, Window.Height / 2 + 80), new Vector2(500, 150), 25, PRIMARY);
+            DrawModernBox(canv, new Vector2(Window.Width / 2 + 80, Window.Height / 2 + 80), new Vector2(500, 150), 45, PRIMARY);
 
             canv.Fill(TEXT);
             canv.Font(smallTxt);
@@ -172,11 +172,11 @@ partial class Program : Simulation
                 }
             }
 
-            DrawModernBox(canv, new Vector2(Window.Width / 2 + 80, setMenuY + Window.Height / 2 + 55), new Vector2(Window.Width - 180, Window.Height - 130), 25, SECONDARY);
+            DrawModernBox(canv, new Vector2(Window.Width / 2 + 80, setMenuY + Window.Height / 2 + 55), new Vector2(Window.Width - 180, Window.Height - 130), 45, SECONDARY);
 
-            DrawModernBox(canv, new Vector2(210, setMenuY + 160), new Vector2(50, 50), 25, PRIMARY);
-            DrawModernBox(canv, new Vector2(270, setMenuY + 160), new Vector2(50, 50), 25, PRIMARY);
-            DrawModernBox(canv, new Vector2(210, setMenuY + 220), new Vector2(50, 50), 25, PRIMARY);
+            DrawModernBox(canv, new Vector2(210, setMenuY + 160), new Vector2(50, 50), 45, PRIMARY);
+            DrawModernBox(canv, new Vector2(270, setMenuY + 160), new Vector2(50, 50), 45, PRIMARY);
+            DrawModernBox(canv, new Vector2(210, setMenuY + 220), new Vector2(50, 50), 45, PRIMARY);
 
             canv.Fill(TEXT);
             canv.Font(smallTxt);
@@ -256,14 +256,14 @@ partial class Program : Simulation
             canv.FontSize(15);
             canv.DrawText("Pallate: " + ColorManager.pallates[pallate].name, new Vector2(310, setMenuY + 160), Alignment.CenterLeft);
 
-            DrawModernBox(canv, new Vector2(150 / 2 + 10, Window.Height / 2 + ((Window.Height - 40) / 2 - 10) / 2 + 10), new Vector2(130, (Window.Height - 40) / 2 - 5), 25, PRIMARY);
+            DrawModernBox(canv, new Vector2(150 / 2 + 10, Window.Height / 2 + ((Window.Height - 40) / 2 - 10) / 2 + 10), new Vector2(130, (Window.Height - 40) / 2 - 5), 45, PRIMARY);
 
             canv.Fill(TEXT);
             canv.Font(smallTxt);
             canv.FontSize(35);
             canv.DrawText(games[0].name, new Vector2(150 / 2 + 10, Window.Height / 2 + ((Window.Height - 40) / 2 - 10) / 2 + 10), Alignment.Center);
 
-            DrawModernBox(canv, new Vector2(150 / 2 + 10, Window.Height / 2 - ((Window.Height - 40) / 2 - 10) / 2 - 10), new Vector2(130, (Window.Height - 40) / 2 - 5), 25, PRIMARY);
+            DrawModernBox(canv, new Vector2(150 / 2 + 10, Window.Height / 2 - ((Window.Height - 40) / 2 - 10) / 2 - 10), new Vector2(130, (Window.Height - 40) / 2 - 5), 45, PRIMARY);
 
             // y no work :(((
 
