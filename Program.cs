@@ -196,7 +196,7 @@ partial class Program : Simulation
             canv.Fill(TEXT);
             canv.Font(smallTxt);
             canv.FontSize(35);
-            canv.DrawText(lightMode ? "Light Mode" : "Dark Mode", new Vector2(450, setMenuY + 220), Alignment.CenterLeft);
+            canv.DrawText(lightMode ? "Light Mode" : "Dark Mode", new Vector2(250, setMenuY + 220), Alignment.CenterLeft);
 
             //i literally have no idea what this does
 
