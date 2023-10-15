@@ -99,7 +99,7 @@ namespace viylouuInc_Launcher
 
                                     new Vector2(
                                             x * pixdivdist,
-                                            x * pixdivdist
+                                            y * pixdivdist
                                         ),
 
                                     new Vector2(pixSize, pixSize), Alignment.Center
