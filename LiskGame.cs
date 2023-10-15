@@ -7,6 +7,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace viylouuInc_Launcher
 {
@@ -82,29 +83,15 @@ namespace viylouuInc_Launcher
                         obj.connectorXs = new int[] { 0 };
                         obj.connectorYs = new int[] { 0 };
 
-                        mapMat[(int)Math.Round(Mouse.Position.X / pixdivdist), (int)Math.Round((Window.Height - Mouse.Position.Y) / pixdivdist)] = obj;
+                        mapMat[(int)Math.Round(Mouse.Position.X / pixdivdist), (int)Math.Round(Mouse.Position.Y / pixdivdist)] = obj;
                     }
-
-                    canv.Fill(Color.White);
-
-                    //fix not rendering bug soon
 
                     for (int x = 0; x < maMaSX; x++)
                     {
-                        for (int y = 0; y > maMaSY; y++)
+                        for (int y = 0; y < maMaSY; y++)
                         {
                             if (mapMat[x, y] != null)
-                            {
-                                canv.DrawRect(
-
-                                    new Vector2(
-                                            x * pixdivdist,
-                                            y * pixdivdist
-                                        ),
-
-                                    new Vector2(pixSize, pixSize), Alignment.Center
-                                );
-                            }
+                            { canv.DrawRect(new Vector2(x * pixdivdist, y * pixdivdist), new Vector2(pixSize, pixSize), Alignment.Center); }
                         }
                     }
                 }
