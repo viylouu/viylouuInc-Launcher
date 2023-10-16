@@ -128,13 +128,14 @@ namespace viylouuInc_Launcher
             snb
         };
 
-        public void ApplyColors(ref Color txt, ref Color bg, ref Color pri, ref Color sec, ref Color acc, bool light, int pallate)
+        public void ApplyColors(ref Color txt, ref Color bg, ref Color pri, ref Color sec, ref Color acc, bool light, int pallate, ref string pallatename)
         { 
             txt = light? pallates[pallate].LightMode.txtCol : pallates[pallate].DarkMode.txtCol;
             bg = light? pallates[pallate].LightMode.bgCol : pallates[pallate].DarkMode.bgCol;
             pri = light? pallates[pallate].LightMode.priCol : pallates[pallate].DarkMode.priCol;
             sec = light? pallates[pallate].LightMode.secCol : pallates[pallate].DarkMode.secCol;
             acc = light? pallates[pallate].LightMode.accCol : pallates[pallate].DarkMode.accCol;
+            pallatename = pallates[pallate].name;
         }
 
         public class colPallate

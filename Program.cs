@@ -5,6 +5,8 @@ using viylouuInc_Launcher;
 using NAudio.Wave;
 using SimulationFramework.Input;
 using ImGuiNET;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 Start<Program>();
 
@@ -61,6 +63,7 @@ partial class Program : Simulation
     bool gameStarted = false;
 
     int pallate = 0;
+    string pallateName = "null";
 
     bool lightMode = false;
 
@@ -68,11 +71,17 @@ partial class Program : Simulation
 
     bool gamMen = false;
 
+    ITexture settingsIcon = null;
+    ITexture homeIcon = null;
+
     public override void OnInitialize()
     {
         Window.Title = "viylouu games";
 
-        cm.ApplyColors(ref TEXT, ref BG, ref PRIMARY, ref SECONDARY, ref ACCENT, lightMode, pallate);
+        settingsIcon = Graphics.LoadTexture(@"Assets\Sprites\Menu-SettingsIcon.png");
+        homeIcon = Graphics.LoadTexture(@"Assets\Sprites\Menu-HomeIcon.png");
+
+        ApplyColors(ref TEXT, ref BG, ref PRIMARY, ref SECONDARY, ref ACCENT, lightMode, pallate, ref pallateName);
 
         smallTxt = Graphics.LoadFont(@"Assets\Fonts\Comfortaa-Bold.ttf");
 
@@ -100,11 +109,23 @@ partial class Program : Simulation
             canv.Fill(g);
             canv.DrawRect(Vector2.Zero, new Vector2(Window.Width, Window.Height));
 
-            DrawModernBox(canv, new Vector2(Window.Width / 2 - 60, 60), new Vector2(80, 80), 45, PRIMARY);
-            DrawModernBox(canv, new Vector2(Window.Width / 2 + 60, 60), new Vector2(80, 80), 45, PRIMARY);
+            DrawModernBox(canv, new Vector2(Window.Width / 2, 60), new Vector2(80, 80), 45, PRIMARY);
+            DrawModernBox(canv, new Vector2(Window.Width / 2 + 100, 60), new Vector2(80, 80), 45, PRIMARY);
+            DrawModernBox(canv, new Vector2(Window.Width / 2 - 100, 60), new Vector2(80, 80), 45, PRIMARY);
+
+            canv.Translate(new Vector2(Window.Width / 2, 60));
+            canv.Rotate(180 * (float.Pi / 180));
+            canv.DrawTexture(settingsIcon, new Vector2(0, 0), new Vector2(60, 60), Alignment.Center);
+
+            canv.ResetState();
+            canv.Translate(new Vector2(Window.Width / 2 - 100, 60));
+            canv.Rotate(180 * (float.Pi / 180));
+            canv.DrawTexture(homeIcon, new Vector2(0, 0), new Vector2(60, 60), Alignment.Center);
+
+            canv.ResetState();
 
             //opens settings
-            if (rectPoint(new Vector2(Window.Width / 2 - 60, 60), new Vector2(80, 80), Mouse.Position))
+            if (rectPoint(new Vector2(Window.Width / 2, 60), new Vector2(80, 80), Mouse.Position))
             {
                 if (Mouse.IsButtonPressed(MouseButton.Left))
                 {
@@ -116,7 +137,7 @@ partial class Program : Simulation
                     settingsOpen = true;
                 }
             } //opens home area again
-            else if (rectPoint(new Vector2(Window.Width / 2 + 60, 60), new Vector2(80, 80), Mouse.Position))
+            else if (rectPoint(new Vector2(Window.Width / 2 - 100, 60), new Vector2(80, 80), Mouse.Position))
             {
                 if (Mouse.IsButtonPressed(MouseButton.Left))
                 {
@@ -135,20 +156,14 @@ partial class Program : Simulation
             canv.FontSize(50);
             canv.DrawText(games[gameSelected].name, new Vector2(Window.Width / 2, 175), Alignment.Center);
 
-            canv.Fill(TEXT);
-            canv.Font(smallTxt);
             canv.FontSize(25);
             canv.DrawText(games[gameSelected].desc, new Vector2(Window.Width / 2, 250), Alignment.Center);
 
-            canv.Fill(TEXT);
-            canv.Font(smallTxt);
-            canv.FontSize(25);
             canv.DrawText("Version: " + games[gameSelected].ver, new Vector2(Window.Width / 2, 300), Alignment.Center);
 
             DrawModernBox(canv, new Vector2(Window.Width / 2, Window.Height / 2 + 80), new Vector2(500, 150), 45, PRIMARY);
 
             canv.Fill(TEXT);
-            canv.Font(smallTxt);
             canv.FontSize(75);
             canv.DrawText("Start", new Vector2(Window.Width / 2, Window.Height / 2 + 80), Alignment.Center);
 
@@ -180,7 +195,8 @@ partial class Program : Simulation
 
             canv.DrawText("-", new Vector2(100, setMenuY + 160), Alignment.Center);
 
-            canv.DrawText("Pallate: " + pallate, new Vector2(100, setMenuY + 160), Alignment.Center); ;
+            canv.FontSize(15);
+            canv.DrawText("Pallate: " + pallateName, new Vector2(140, setMenuY + 160), Alignment.CenterLeft); ;
 
             if (rectPoint(new Vector2(40, setMenuY + 160), new Vector2(50, 50), Mouse.Position))
             {
@@ -196,7 +212,7 @@ partial class Program : Simulation
                     if (pallate < 0)
                     { pallate = ColorManager.pallates.Length - 1; }
 
-                    cm.ApplyColors(ref TEXT, ref BG, ref PRIMARY, ref SECONDARY, ref ACCENT, lightMode, pallate);
+                    ApplyColors(ref TEXT, ref BG, ref PRIMARY, ref SECONDARY, ref ACCENT, lightMode, pallate, ref pallateName);
                 }
             }
 
@@ -214,7 +230,7 @@ partial class Program : Simulation
                     if (pallate < 0)
                     { pallate = ColorManager.pallates.Length - 1; }
 
-                    cm.ApplyColors(ref TEXT, ref BG, ref PRIMARY, ref SECONDARY, ref ACCENT, lightMode, pallate);
+                    ApplyColors(ref TEXT, ref BG, ref PRIMARY, ref SECONDARY, ref ACCENT, lightMode, pallate, ref pallateName);
                 }
             }
 
@@ -299,5 +315,33 @@ partial class Program : Simulation
         public string name { get; set; }
 
         public float ver { get; set; }
+    }
+
+    void ApplyColors(ref Color txt, ref Color bg, ref Color pri, ref Color sec, ref Color acc, bool light, int pallate, ref string pallatename)
+    {
+        cm.ApplyColors(ref txt, ref bg, ref pri, ref sec, ref acc, light, pallate, ref pallatename);
+
+        ApplyColorToTex(settingsIcon, txt);
+        ApplyColorToTex(homeIcon, txt);
+    }
+
+    void ApplyColorToTex(ITexture tex, Color col)
+    {
+        for (int x = 0; x < tex.Width; x++)
+        {
+            for (int y = 0; y < tex.Height; y++)
+            {
+                if (tex.GetPixel(x, y).A > 0)
+                {
+                    tex.GetPixel(x, y) = col;
+                }
+                else
+                {
+                    tex.GetPixel(x, y) = new Color(0, 0, 0, 0);
+                }
+            }
+        }
+
+        tex.ApplyChanges();
     }
 }
