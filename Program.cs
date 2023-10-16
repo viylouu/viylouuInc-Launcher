@@ -73,6 +73,7 @@ partial class Program : Simulation
 
     ITexture settingsIcon = null;
     ITexture homeIcon = null;
+    ITexture infoIcon = null;
 
     public override void OnInitialize()
     {
@@ -80,6 +81,7 @@ partial class Program : Simulation
 
         settingsIcon = Graphics.LoadTexture(@"Assets\Sprites\Menu-SettingsIcon.png");
         homeIcon = Graphics.LoadTexture(@"Assets\Sprites\Menu-HomeIcon.png");
+        infoIcon = Graphics.LoadTexture(@"Assets\Sprites\Menu-InfoIcon.png");
 
         ApplyColors(ref TEXT, ref BG, ref PRIMARY, ref SECONDARY, ref ACCENT, lightMode, pallate, ref pallateName);
 
@@ -121,6 +123,11 @@ partial class Program : Simulation
             canv.Translate(new Vector2(Window.Width / 2 - 100, 60));
             canv.Rotate(180 * (float.Pi / 180));
             canv.DrawTexture(homeIcon, new Vector2(0, 0), new Vector2(60, 60), Alignment.Center);
+
+            canv.ResetState();
+            canv.Translate(new Vector2(Window.Width / 2 + 100, 60));
+            canv.Rotate(180 * (float.Pi / 180));
+            canv.DrawTexture(infoIcon, new Vector2(0, 0), new Vector2(60, 60), Alignment.Center);
 
             canv.ResetState();
 
@@ -323,6 +330,7 @@ partial class Program : Simulation
 
         ApplyColorToTex(settingsIcon, txt);
         ApplyColorToTex(homeIcon, txt);
+        ApplyColorToTex(infoIcon, txt);
     }
 
     void ApplyColorToTex(ITexture tex, Color col)
