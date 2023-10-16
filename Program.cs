@@ -101,8 +101,8 @@ partial class Program : Simulation
             canv.Fill(g);
             canv.DrawRect(Vector2.Zero, new Vector2(Window.Width, Window.Height));
 
-            DrawModernBox(canv, new Vector2((Window.Width - 160) / 2 / 2 + 160 + 8, 60), new Vector2((Window.Width - 180) / 2 - 15, 80), 45, PRIMARY);
-            DrawModernBox(canv, new Vector2((Window.Width - 160) / 2 / 2 + 160 + (Window.Width - 160) / 2 - 5, 60), new Vector2((Window.Width - 190) / 2 - 15, 80), 45, PRIMARY);
+            DrawModernBox(canv, new Vector2((Window.Width - 20) / 2 / 2 +  + 20, 60), new Vector2((Window.Width - 20) / 2 - 15, 80), 45, PRIMARY);
+            DrawModernBox(canv, new Vector2((Window.Width - 20) / 2 / 2 + 20 + (Window.Width - 20) / 2 - 5, 60), new Vector2((Window.Width - 20) / 2 - 15, 80), 45, PRIMARY);
 
             canv.Fill(TEXT);
             canv.Font(smallTxt);
