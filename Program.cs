@@ -96,21 +96,16 @@ partial class Program : Simulation
             UpdSep((DateTime.UtcNow - lastItTime).TotalSeconds, Fix);
             lastItTime = DateTime.UtcNow;
 
-            Gradient g = new LinearGradient(0, 0, Window.Width, Window.Height, new Color[] { BG, SECONDARY});
+            Gradient g = new LinearGradient(0, 0, Window.Width, Window.Height, new Color[] { BG, SECONDARY });
 
             canv.Fill(g);
             canv.DrawRect(Vector2.Zero, new Vector2(Window.Width, Window.Height));
 
-            DrawModernBox(canv, new Vector2((Window.Width - 160) / 2 / 2 + 160 + 8, 60), new Vector2((Window.Width - 180) / 2 - 15, 80), 45, PRIMARY);
-            DrawModernBox(canv, new Vector2((Window.Width - 160) / 2 / 2 + 160 + (Window.Width - 160) / 2 - 5, 60), new Vector2((Window.Width - 190) / 2 - 15, 80), 45, PRIMARY);
+            DrawModernBox(canv, new Vector2(Window.Width / 2 - 60, 60), new Vector2(80, 80), 45, PRIMARY);
+            DrawModernBox(canv, new Vector2(Window.Width / 2 + 60, 60), new Vector2(80, 80), 45, PRIMARY);
 
-            canv.Fill(TEXT);
-            canv.Font(smallTxt);
-            canv.FontSize(50);
-            canv.DrawText("settings", new Vector2((Window.Width - 110) / 2 / 2 + 110, 60), Alignment.Center);
-            canv.DrawText("home", new Vector2((Window.Width - 110) / 2 / 2 + 110 + (Window.Width - 110) / 2, 60), Alignment.Center);
-
-            if (rectPoint(new Vector2((Window.Width - 160) / 2 / 2 + 160, 60), new Vector2((Window.Width - 190) / 2 - 15, 80), Mouse.Position))
+            //opens settings
+            if (rectPoint(new Vector2(Window.Width / 2 - 60, 60), new Vector2(80, 80), Mouse.Position))
             {
                 if (Mouse.IsButtonPressed(MouseButton.Left))
                 {
@@ -121,8 +116,8 @@ partial class Program : Simulation
 
                     settingsOpen = true;
                 }
-            }
-            else if (rectPoint(new Vector2((Window.Width - 160) / 2 / 2 + 160 + (Window.Width - 160) / 2, 60), new Vector2((Window.Width - 190) / 2 - 15, 80), Mouse.Position))
+            } //opens home area again
+            else if (rectPoint(new Vector2(Window.Width / 2 + 60, 60), new Vector2(80, 80), Mouse.Position))
             {
                 if (Mouse.IsButtonPressed(MouseButton.Left))
                 {
@@ -135,31 +130,30 @@ partial class Program : Simulation
                 }
             }
 
+            //gameinfo
             canv.Fill(TEXT);
             canv.Font(smallTxt);
             canv.FontSize(50);
-            canv.DrawText(games[gameSelected].name, new Vector2(Window.Width / 2 + 80, 175), Alignment.Center);
+            canv.DrawText(games[gameSelected].name, new Vector2(Window.Width / 2, 175), Alignment.Center);
 
             canv.Fill(TEXT);
             canv.Font(smallTxt);
             canv.FontSize(25);
-            canv.DrawText(games[gameSelected].desc, new Vector2(Window.Width / 2 + 80, 250), Alignment.Center);
+            canv.DrawText(games[gameSelected].desc, new Vector2(Window.Width / 2, 250), Alignment.Center);
 
             canv.Fill(TEXT);
             canv.Font(smallTxt);
             canv.FontSize(25);
-            canv.DrawText("Version: " + games[gameSelected].ver, new Vector2(Window.Width / 2 + 80, 300), Alignment.Center);
+            canv.DrawText("Version: " + games[gameSelected].ver, new Vector2(Window.Width / 2, 300), Alignment.Center);
 
-            //soooooo messy
-
-            DrawModernBox(canv, new Vector2(Window.Width / 2 + 80, Window.Height / 2 + 80), new Vector2(500, 150), 45, PRIMARY);
+            DrawModernBox(canv, new Vector2(Window.Width / 2, Window.Height / 2 + 80), new Vector2(500, 150), 45, PRIMARY);
 
             canv.Fill(TEXT);
             canv.Font(smallTxt);
             canv.FontSize(75);
-            canv.DrawText("Start", new Vector2(Window.Width / 2 + 80, Window.Height / 2 + 80), Alignment.Center);
+            canv.DrawText("Start", new Vector2(Window.Width / 2, Window.Height / 2 + 80), Alignment.Center);
 
-            if (rectPoint(new Vector2(Window.Width / 2 + 80, Window.Height / 2 + 80), new Vector2(500, 150), Mouse.Position) && !settingsOpen)
+            if (rectPoint(new Vector2(Window.Width / 2, Window.Height / 2 + 80), new Vector2(500, 150), Mouse.Position) && !settingsOpen)
             {
                 if (Mouse.IsButtonPressed(MouseButton.Left))
                 {
@@ -172,35 +166,25 @@ partial class Program : Simulation
                 }
             }
 
-            DrawModernBox(canv, new Vector2(Window.Width / 2 + 80, setMenuY + Window.Height / 2 + 55), new Vector2(Window.Width - 180, Window.Height - 130), 45, SECONDARY);
+            //settings menu
 
-            DrawModernBox(canv, new Vector2(210, setMenuY + 160), new Vector2(50, 50), 45, PRIMARY);
-            DrawModernBox(canv, new Vector2(270, setMenuY + 160), new Vector2(50, 50), 45, PRIMARY);
-            DrawModernBox(canv, new Vector2(210, setMenuY + 220), new Vector2(50, 50), 45, PRIMARY);
+            canv.Fill(SECONDARY);
+            canv.DrawRect(new Vector2(0, 120 + setMenuY), new Vector2(Window.Width, Window.Height), Alignment.TopLeft);
 
-            canv.Fill(TEXT);
-            canv.Font(smallTxt);
-            canv.FontSize(35);
-            canv.DrawText("+", new Vector2(210, setMenuY + 160), Alignment.Center);
+            DrawModernBox(canv, new Vector2(40, setMenuY + 160), new Vector2(50, 50), 45, PRIMARY);
+            DrawModernBox(canv, new Vector2(100, setMenuY + 160), new Vector2(50, 50), 45, PRIMARY);
 
             canv.Fill(TEXT);
             canv.Font(smallTxt);
             canv.FontSize(35);
-            canv.DrawText("-", new Vector2(270, setMenuY + 160), Alignment.Center);
+            canv.DrawText("+", new Vector2(40, setMenuY + 160), Alignment.Center);
 
             canv.Fill(TEXT);
             canv.Font(smallTxt);
             canv.FontSize(35);
-            canv.DrawText(lightMode ? "*" : "x", new Vector2(210, setMenuY + 220), Alignment.Center);
+            canv.DrawText("-", new Vector2(100, setMenuY + 160), Alignment.Center); ;
 
-            canv.Fill(TEXT);
-            canv.Font(smallTxt);
-            canv.FontSize(35);
-            canv.DrawText(lightMode ? "Light Mode" : "Dark Mode", new Vector2(250, setMenuY + 220), Alignment.CenterLeft);
-
-            //i literally have no idea what this does
-
-            if (rectPoint(new Vector2(210, setMenuY + 160), new Vector2(50, 50), Mouse.Position))
+            if (rectPoint(new Vector2(40, setMenuY + 160), new Vector2(50, 50), Mouse.Position))
             {
                 if (Mouse.IsButtonPressed(MouseButton.Left))
                 {
@@ -218,7 +202,7 @@ partial class Program : Simulation
                 }
             }
 
-            if (rectPoint(new Vector2(270, setMenuY + 160), new Vector2(50, 50), Mouse.Position))
+            if (rectPoint(new Vector2(100, setMenuY + 160), new Vector2(50, 50), Mouse.Position))
             {
                 if (Mouse.IsButtonPressed(MouseButton.Left))
                 {
@@ -236,66 +220,18 @@ partial class Program : Simulation
                 }
             }
 
-            if (rectPoint(new Vector2(210, setMenuY + 220), new Vector2(50, 50), Mouse.Position))
+            if (Keyboard.IsKeyPressed(Key.LeftArrow))
             {
-                if (Mouse.IsButtonPressed(MouseButton.Left))
-                {
-                    if (outs[0].PlaybackState is PlaybackState.Playing) { outs[0].Stop(); }
-                    ins[0].CurrentTime = new TimeSpan(0L);
-                    outs[0].Init(ins[0]);
-                    outs[0].Play();
-
-                    lightMode = !lightMode;
-
-                    cm.ApplyColors(ref TEXT, ref BG, ref PRIMARY, ref SECONDARY, ref ACCENT, lightMode, pallate);
-                }
+                gameSelected -= 1;
+                if (gameSelected < 0)
+                { gameSelected = games.Length - 1; }
             }
 
-            canv.Fill(TEXT);
-            canv.Font(smallTxt);
-            canv.FontSize(15);
-            canv.DrawText("Pallate: " + ColorManager.pallates[pallate].name, new Vector2(310, setMenuY + 160), Alignment.CenterLeft);
-
-            DrawModernBox(canv, new Vector2(150 / 2 + 10, Window.Height / 2 + ((Window.Height - 40) / 2 - 10) / 2 + 10), new Vector2(130, (Window.Height - 40) / 2 - 5), 45, PRIMARY);
-
-            canv.Fill(TEXT);
-            canv.Font(smallTxt);
-            canv.FontSize(35);
-            canv.DrawText(games[0].name, new Vector2(150 / 2 + 10, Window.Height / 2 + ((Window.Height - 40) / 2 - 10) / 2 + 10), Alignment.Center);
-
-            DrawModernBox(canv, new Vector2(150 / 2 + 10, Window.Height / 2 - ((Window.Height - 40) / 2 - 10) / 2 - 10), new Vector2(130, (Window.Height - 40) / 2 - 5), 45, PRIMARY);
-
-            // y no work :(((
-
-            canv.Fill(TEXT);
-            canv.Font(smallTxt);
-            canv.FontSize(35);
-            canv.DrawText(games[1].name, new Vector2(150 / 2 + 10, Window.Height / 2 - ((Window.Height - 40) / 2 - 10) / 2 - 10), Alignment.Center);
-
-            if (rectPoint(new Vector2(150 / 2 + 10, Window.Height / 2 + ((Window.Height - 40) / 2 - 10) / 2 + 10), new Vector2(130, (Window.Height - 40) / 2 - 5), Mouse.Position))
+            if (Keyboard.IsKeyPressed(Key.RightArrow))
             {
-                if (Mouse.IsButtonPressed(MouseButton.Left))
-                {
-                    if (outs[0].PlaybackState is PlaybackState.Playing) { outs[0].Stop(); }
-                    ins[0].CurrentTime = new TimeSpan(0L);
-                    outs[0].Init(ins[0]);
-                    outs[0].Play();
-
-                    gameSelected = 0;
-                }
-            }
-
-            if (rectPoint(new Vector2(150 / 2 + 10, Window.Height / 2 - ((Window.Height - 40) / 2 - 10) / 2 - 10), new Vector2(130, (Window.Height - 40) / 2 - 5), Mouse.Position))
-            {
-                if (Mouse.IsButtonPressed(MouseButton.Left))
-                {
-                    if (outs[0].PlaybackState is PlaybackState.Playing) { outs[0].Stop(); }
-                    ins[0].CurrentTime = new TimeSpan(0L);
-                    outs[0].Init(ins[0]);
-                    outs[0].Play();
-
-                    gameSelected = 1;
-                }
+                gameSelected += 1;
+                if (gameSelected > games.Length - 1)
+                { gameSelected = 0; }
             }
         }
 
@@ -329,7 +265,6 @@ partial class Program : Simulation
             setMenuY += (Window.Height - setMenuY) / 5;
         }
     }
-
 
     void DrawModernBox(ICanvas canv, Vector2 pos, Vector2 scale, int roundness, Color col)
     {
