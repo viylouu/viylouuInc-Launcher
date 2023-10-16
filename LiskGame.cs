@@ -25,6 +25,10 @@ namespace viylouuInc_Launcher
 
         public bool started = false;
 
+        public int lastClickX = 0;
+        public int lastClickY = 0;
+        public bool firstClick = true;
+
         public void Update()
         {
             if (!started)
@@ -80,10 +84,35 @@ namespace viylouuInc_Launcher
                         obj.connect = false;
                         obj.connectorAmt = 0;
 
-                        obj.connectorXs = new int[] { 0 };
-                        obj.connectorYs = new int[] { 0 };
+                        obj.connectorX = 0;
+                        obj.connectorY = 0;
 
                         mapMat[(int)Math.Round(Mouse.Position.X / pixdivdist), (int)Math.Round(Mouse.Position.Y / pixdivdist)] = obj;
+
+                        if (!firstClick)
+                        {
+                            mapMat[lastClickX, lastClickY].connect = true;
+
+                            mapMat[lastClickX, lastClickY].connectorX = (int)Math.Round(Mouse.Position.X / pixdivdist);
+                            mapMat[lastClickX, lastClickY].connectorY = (int)Math.Round(Mouse.Position.Y / pixdivdist);
+
+                            lastClickX = (int)Math.Round(Mouse.Position.X / pixdivdist);
+                            lastClickY = (int)Math.Round(Mouse.Position.Y / pixdivdist);
+                        }
+                        else
+                        {
+                            firstClick = false;
+
+                            lastClickX = (int)Math.Round(Mouse.Position.X / pixdivdist);
+                            lastClickY = (int)Math.Round(Mouse.Position.Y / pixdivdist);
+                        }
+                    }
+                    else if (Mouse.IsButtonPressed(MouseButton.Right))
+                    {
+                        firstClick = true;
+
+                        lastClickX = 0;
+                        lastClickY = 0;
                     }
 
                     for (int x = 0; x < maMaSX; x++)
@@ -91,19 +120,38 @@ namespace viylouuInc_Launcher
                         for (int y = 0; y < maMaSY; y++)
                         {
                             if (mapMat[x, y] != null)
-                            { canv.DrawRect(new Vector2(x * pixdivdist, y * pixdivdist), new Vector2(pixSize, pixSize), Alignment.Center); }
+                            {
+                                if (mapMat[x, y].connect)
+                                {
+                                    canv.Fill(Color.LightGray);
+
+                                    for (int i = 0; i < x * distBetwLines - mapMat[x, y].connectorX * distBetwLines; i++)
+                                    {
+                                        canv.DrawRect(, new Vector2(pixSize, pixSize), Alignment.Center);
+                                    }
+                                }
+
+                                canv.Fill(Color.White);
+
+                                canv.DrawRect(new Vector2(x * pixdivdist, y * pixdivdist), new Vector2(pixSize, pixSize), Alignment.Center);
+                            }
                         }
                     }
                 }
             }
         }
 
+        public float getAngle(Vector2 p1, Vector2 p2)
+        {
+            return (float)Math.Atan2(p1.X - p2.X, p1.Y - p2.Y);
+        }
+
         public class wallObj
         {
             public bool connect { get; set; }
             public int connectorAmt { get; set; }
-            public int[] connectorXs { get; set; }
-            public int[] connectorYs { get; set; }
+            public int connectorX { get; set; }
+            public int connectorY { get; set; }
         }
     }
 }
