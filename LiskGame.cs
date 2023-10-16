@@ -127,7 +127,7 @@ namespace viylouuInc_Launcher
 
                                     for (int i = 0; i < x * distBetwLines - mapMat[x, y].connectorX * distBetwLines; i++)
                                     {
-                                        canv.DrawRect(, new Vector2(pixSize, pixSize), Alignment.Center);
+                                        canv.DrawRect(new Vector2(0, 0), new Vector2(pixSize, pixSize), Alignment.Center);
                                     }
                                 }
 

@@ -56,7 +56,6 @@ partial class Program : Simulation
         ver = 0.0f
     };
 
-
     gameInfo[] games = null;
 
     bool gameStarted = false;
@@ -179,10 +178,9 @@ partial class Program : Simulation
             canv.FontSize(35);
             canv.DrawText("+", new Vector2(40, setMenuY + 160), Alignment.Center);
 
-            canv.Fill(TEXT);
-            canv.Font(smallTxt);
-            canv.FontSize(35);
-            canv.DrawText("-", new Vector2(100, setMenuY + 160), Alignment.Center); ;
+            canv.DrawText("-", new Vector2(100, setMenuY + 160), Alignment.Center);
+
+            canv.DrawText("Pallate: " + pallate, new Vector2(100, setMenuY + 160), Alignment.Center); ;
 
             if (rectPoint(new Vector2(40, setMenuY + 160), new Vector2(50, 50), Mouse.Position))
             {
