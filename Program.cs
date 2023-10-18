@@ -69,11 +69,10 @@ partial class Program : Simulation
 
     ColorManager cm = new ColorManager();
 
-    bool gamMen = false;
-
     ITexture settingsIcon = null;
     ITexture homeIcon = null;
     ITexture infoIcon = null;
+    ITexture closeIcon = null;
 
     public override void OnInitialize()
     {
@@ -82,6 +81,7 @@ partial class Program : Simulation
         settingsIcon = Graphics.LoadTexture(@"Assets\Sprites\Menu-SettingsIcon.png");
         homeIcon = Graphics.LoadTexture(@"Assets\Sprites\Menu-HomeIcon.png");
         infoIcon = Graphics.LoadTexture(@"Assets\Sprites\Menu-InfoIcon.png");
+        closeIcon = Graphics.LoadTexture(@"Assets\Sprites\Menu-CloseIcon.png");
 
         ApplyColors(ref TEXT, ref BG, ref PRIMARY, ref SECONDARY, ref ACCENT, lightMode, pallate, ref pallateName);
 
@@ -111,28 +111,37 @@ partial class Program : Simulation
             canv.Fill(g);
             canv.DrawRect(Vector2.Zero, new Vector2(Window.Width, Window.Height));
 
-            DrawModernBox(canv, new Vector2(Window.Width / 2, 60), new Vector2(80, 80), 45, PRIMARY);
-            DrawModernBox(canv, new Vector2(Window.Width / 2 + 100, 60), new Vector2(80, 80), 45, PRIMARY);
-            DrawModernBox(canv, new Vector2(Window.Width / 2 - 100, 60), new Vector2(80, 80), 45, PRIMARY);
+            canv.Fill(new Color(0, 0, 0, 100));
+            canv.DrawRect(Vector2.Zero, new Vector2(Window.Width, 120));
 
-            canv.Translate(new Vector2(Window.Width / 2, 60));
+            DrawModernBox(canv, new Vector2(Window.Width / 2 - 140, 60), new Vector2(80, 80), 45, PRIMARY);
+            DrawModernBox(canv, new Vector2(Window.Width / 2 - 50, 60), new Vector2(80, 80), 45, PRIMARY);
+            DrawModernBox(canv, new Vector2(Window.Width / 2 + 50, 60), new Vector2(80, 80), 45, PRIMARY);
+            DrawModernBox(canv, new Vector2(Window.Width / 2 + 140, 60), new Vector2(80, 80), 45, PRIMARY);
+
+            canv.Translate(new Vector2(Window.Width / 2 - 140, 60));
             canv.Rotate(180 * (float.Pi / 180));
             canv.DrawTexture(settingsIcon, new Vector2(0, 0), new Vector2(60, 60), Alignment.Center);
 
             canv.ResetState();
-            canv.Translate(new Vector2(Window.Width / 2 - 100, 60));
+            canv.Translate(new Vector2(Window.Width / 2 - 50, 60));
             canv.Rotate(180 * (float.Pi / 180));
             canv.DrawTexture(homeIcon, new Vector2(0, 0), new Vector2(60, 60), Alignment.Center);
 
             canv.ResetState();
-            canv.Translate(new Vector2(Window.Width / 2 + 100, 60));
+            canv.Translate(new Vector2(Window.Width / 2 + 50, 60));
             canv.Rotate(180 * (float.Pi / 180));
             canv.DrawTexture(infoIcon, new Vector2(0, 0), new Vector2(60, 60), Alignment.Center);
 
             canv.ResetState();
+            canv.Translate(new Vector2(Window.Width / 2 + 140, 60));
+            canv.Rotate(180 * (float.Pi / 180));
+            canv.DrawTexture(closeIcon, new Vector2(0, 0), new Vector2(60, 60), Alignment.Center);
+
+            canv.ResetState();
 
             //opens settings
-            if (rectPoint(new Vector2(Window.Width / 2, 60), new Vector2(80, 80), Mouse.Position))
+            if (rectPoint(new Vector2(Window.Width / 2 - 140, 60), new Vector2(80, 80), Mouse.Position))
             {
                 if (Mouse.IsButtonPressed(MouseButton.Left))
                 {
@@ -144,7 +153,7 @@ partial class Program : Simulation
                     settingsOpen = true;
                 }
             } //opens home area again
-            else if (rectPoint(new Vector2(Window.Width / 2 - 100, 60), new Vector2(80, 80), Mouse.Position))
+            else if (rectPoint(new Vector2(Window.Width / 2 - 50, 60), new Vector2(80, 80), Mouse.Position))
             {
                 if (Mouse.IsButtonPressed(MouseButton.Left))
                 {
@@ -203,7 +212,35 @@ partial class Program : Simulation
             canv.DrawText("-", new Vector2(100, setMenuY + 160), Alignment.Center);
 
             canv.FontSize(15);
-            canv.DrawText("Pallate: " + pallateName, new Vector2(140, setMenuY + 160), Alignment.CenterLeft); ;
+            canv.DrawText("Pallate: " + pallateName, new Vector2(140, setMenuY + 160), Alignment.CenterLeft);
+
+            DrawModernBox(canv, new Vector2(40, setMenuY + 220), new Vector2(50, 50), 45, PRIMARY);
+
+            canv.Fill(TEXT);
+            canv.Font(smallTxt);
+            canv.FontSize(35);
+            canv.DrawText(fullScreen? "*" : "-", new Vector2(40, setMenuY + 220), Alignment.Center);
+
+            canv.FontSize(15);
+            canv.DrawText("Fullscreen", new Vector2(80, setMenuY + 220), Alignment.CenterLeft);
+
+            if (rectPoint(new Vector2(40, setMenuY + 220), new Vector2(50, 50), Mouse.Position))
+            {
+                if (Mouse.IsButtonPressed(MouseButton.Left))
+                {
+                    if (outs[0].PlaybackState is PlaybackState.Playing) { outs[0].Stop(); }
+                    ins[0].CurrentTime = new TimeSpan(0L);
+                    outs[0].Init(ins[0]);
+                    outs[0].Play();
+
+                    fullScreen = !fullScreen;
+
+                    if (fullScreen)
+                    { Window.EnterFullscreen(); }
+                    else
+                    { Window.ExitFullscreen(); }
+                }
+            }
 
             if (rectPoint(new Vector2(40, setMenuY + 160), new Vector2(50, 50), Mouse.Position))
             {
@@ -331,6 +368,7 @@ partial class Program : Simulation
         ApplyColorToTex(settingsIcon, txt);
         ApplyColorToTex(homeIcon, txt);
         ApplyColorToTex(infoIcon, txt);
+        ApplyColorToTex(closeIcon, txt);
     }
 
     void ApplyColorToTex(ITexture tex, Color col)
