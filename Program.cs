@@ -60,6 +60,14 @@ partial class Program : Simulation
         ver = 0.0f
     };
 
+    gameInfo tink = new gameInfo
+    {
+        name = "Tink",
+        desc = "Tink is a 2d RPG game",
+        updater = new LiskGame().Update,
+        ver = 0.0f
+    };
+
     gameInfo[] games = null;
 
     bool gameStarted = false;
@@ -94,8 +102,9 @@ partial class Program : Simulation
         { outs[i] = new WaveOutEvent(); }
 
         games = new gameInfo[] {
-            cells//,
-            //lisk
+            cells,
+            //lisk,
+            tink
         };
     }
 
