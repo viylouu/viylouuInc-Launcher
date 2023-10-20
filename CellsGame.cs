@@ -144,8 +144,6 @@ namespace viylouuInc_Launcher
                 };
 
                 strted = true;
-
-                drawPos = Mouse.Position;
             }
             else
             {
@@ -642,7 +640,7 @@ namespace viylouuInc_Launcher
             }
 
             if (texUpdated || recentTexUpd)
-            { tex.ApplyChanges(); recentTexUpd = recentTexUpd? false : recentTexUpd; }
+            { tex.ApplyChanges(); recentTexUpd = recentTexUpd? false : re; }
         }
 
         public Cell cloneProps(Cell cellToClone)

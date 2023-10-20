@@ -36,12 +36,12 @@ namespace viylouuInc_Launcher
                     props, 
                     new Rectangle(
                         new Vector2(
-                            propsD.topLefts[0].X, 
-                            propsD.topLefts[0].Y
+                            0, 
+                            0
                         ), 
                         new Vector2(
-                            propsD.scales[0].X, 
-                            propsD.scales[0].Y)
+                            16, 
+                            16)
                         ), 
                     new Rectangle(
                         new Vector2(
@@ -49,8 +49,8 @@ namespace viylouuInc_Launcher
                             Window.Height / 2
                         ), 
                         new Vector2(
-                            propsD.scales[0].X * pixSize, 
-                            propsD.scales[0].Y * pixSize
+                            16 * pixSize, 
+                            16 * pixSize
                         )
                     )
                 );
