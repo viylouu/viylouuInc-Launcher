@@ -640,7 +640,7 @@ namespace viylouuInc_Launcher
             }
 
             if (texUpdated || recentTexUpd)
-            { tex.ApplyChanges(); recentTexUpd = recentTexUpd? false : re; }
+            { tex.ApplyChanges(); recentTexUpd = recentTexUpd? false : recentTexUpd; }
         }
 
         public Cell cloneProps(Cell cellToClone)
