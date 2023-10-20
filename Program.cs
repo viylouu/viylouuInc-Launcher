@@ -64,7 +64,7 @@ partial class Program : Simulation
     {
         name = "Tink",
         desc = "Tink is a 2d RPG game",
-        updater = new LiskGame().Update,
+        updater = new TinkGame().Update,
         ver = 0.0f
     };
 
