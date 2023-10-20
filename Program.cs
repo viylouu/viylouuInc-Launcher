@@ -314,9 +314,8 @@ partial class Program : Simulation
             canv.DrawText("in the github listed on the itch.io page.", new Vector2(20, infoMenuY + 290), Alignment.CenterLeft);
             canv.DrawText("All assets can be found on github or in the files for the", new Vector2(20, infoMenuY + 340), Alignment.CenterLeft);
             canv.DrawText("game itself, which includes all fonts, audio, sprites, and more.", new Vector2(20, infoMenuY + 380), Alignment.CenterLeft);
-            canv.DrawText("The libraries used by viylouu are Simulation Framework, and", new Vector2(20, infoMenuY + 430), Alignment.CenterLeft);
-            canv.DrawText("NAudio.  Check out the Simulation Framework discord if you", new Vector2(20, infoMenuY + 470), Alignment.CenterLeft);
-            canv.DrawText("want help when editing or modding this launcher.", new Vector2(20, infoMenuY + 510), Alignment.CenterLeft);
+            canv.DrawText("The libraries used by viylouu are Simulation Framework, ", new Vector2(20, infoMenuY + 430), Alignment.CenterLeft);
+            canv.DrawText("NAudio, and Newtonsoft.", new Vector2(20, infoMenuY + 470), Alignment.CenterLeft);
             canv.DrawText("Links:", new Vector2(20, infoMenuY + 570), Alignment.CenterLeft);
             canv.DrawText(@"github.com/Redninja106/simulationframework", new Vector2(20, infoMenuY + 610), Alignment.CenterLeft);
             canv.DrawText(@"github.com/viylouu/viylouuInc-Launcher", new Vector2(20, infoMenuY + 650), Alignment.CenterLeft);
