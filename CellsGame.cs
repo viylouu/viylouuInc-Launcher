@@ -117,6 +117,8 @@ namespace viylouuInc_Launcher
 
         public ITexture tex = null;
 
+        Vector2 drawPos = new Vector2(0, 0);
+
         public void Update()
         {
             if (!strted)
@@ -142,10 +144,17 @@ namespace viylouuInc_Launcher
                 };
 
                 strted = true;
+
+                drawPos = Mouse.Position;
             }
             else
             {
                 ICanvas canv = Graphics.GetOutputCanvas();
+
+                if (Mouse.IsButtonDown(MouseButton.Left))
+                { drawPos += (Mouse.Position - drawPos) / 10; }
+                else
+                { drawPos = Mouse.Position; }
 
                 canv.Clear(new Color(32, 32, 33));
 
@@ -204,8 +213,8 @@ namespace viylouuInc_Launcher
 
                 if (Mouse.IsButtonDown(MouseButton.Left) && !started)
                 {
-                    int dx = (int)Math.Round(Mouse.Position.X / pixSize);
-                    int dy = (int)Math.Round((Window.Height - Mouse.Position.Y) / pixSize);
+                    int dx = (int)Math.Round(drawPos.X / pixSize);
+                    int dy = (int)Math.Round((Window.Height - drawPos.Y) / pixSize);
 
                     if (
                         dx >= 0 &&
@@ -268,7 +277,7 @@ namespace viylouuInc_Launcher
                                                 c.color = Color.Lerp(c.cols[0], c.cols[1], r.Next(0, 1000) / 1000f);
 
                                                 matrix[dx + x, dy + y] = c; 
-                                            } 
+                                            }
                                         }
                                     }
                                 }
@@ -289,10 +298,12 @@ namespace viylouuInc_Launcher
                     recentTexUpd = true;
                 }
 
+                canv.DrawTexture(tex, Vector2.Zero, new Vector2(mSX * pixSize, mSY * pixSize), Alignment.TopLeft);
+
                 if (Keyboard.IsKeyDown(Key.LeftControl))
                 {
                     canv.Fill(new Color(110, 255, 110, 100));
-                    canv.DrawRect(new Vector2((int)Math.Round(Mouse.Position.X / pixSize) * pixSize - (float)Math.Round((float)drawRad * pixSize / 2), (int)Math.Round(Mouse.Position.Y / pixSize) * pixSize - (float)Math.Round((float)drawRad * pixSize / 2)), new Vector2(drawRad * pixSize, drawRad * pixSize));
+                    canv.DrawRect(new Vector2((int)Math.Round(drawPos.X / pixSize) * pixSize - (float)Math.Round((float)drawRad * pixSize / 2), (int)Math.Round(drawPos.Y / pixSize) * pixSize - (float)Math.Round((float)drawRad * pixSize / 2)), new Vector2(drawRad * pixSize, drawRad * pixSize));
 
                     drawRad += (int)Mouse.ScrollWheelDelta;
                     if (drawRad <= 0)
@@ -300,15 +311,11 @@ namespace viylouuInc_Launcher
                 }
                 else
                 {
-                    //very weird please fix later no idea what is wrong
-
                     cellSel += (int)Mouse.ScrollWheelDelta;
                     cellSel = cellSel % cells.Length;
                     if (cellSel < 0)
                     { cellSel = cells.Length - 1; }
                 }
-
-                canv.DrawTexture(tex, Vector2.Zero, new Vector2(mSX * pixSize, mSY * pixSize), Alignment.TopLeft);
 
                 canv.Fill(Color.White);
                 canv.DrawText(Math.Round(1 / Time.DeltaTime) + " FPS", new Vector2(5, 5), Alignment.TopLeft);
@@ -635,9 +642,7 @@ namespace viylouuInc_Launcher
             }
 
             if (texUpdated || recentTexUpd)
-            { tex.ApplyChanges(); }
-
-            recentTexUpd = false;
+            { tex.ApplyChanges(); recentTexUpd = recentTexUpd? false : recentTexUpd; }
         }
 
         public Cell cloneProps(Cell cellToClone)

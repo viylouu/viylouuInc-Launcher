@@ -29,9 +29,11 @@ partial class Program : Simulation
 
     bool settingsOpen = false;
 
-    float menuAnimTime = 1.4f;
+    bool infoOpen = false;
 
     float setMenuY = 0;
+
+    float infoMenuY = 0;
 
     static double fps1 = 48;
     double fps = 1 / fps1;
@@ -92,8 +94,8 @@ partial class Program : Simulation
         { outs[i] = new WaveOutEvent(); }
 
         games = new gameInfo[] {
-            cells,
-            lisk
+            cells//,
+            //lisk
         };
     }
 
@@ -151,8 +153,10 @@ partial class Program : Simulation
                     outs[0].Play();
 
                     settingsOpen = true;
+                    infoOpen = false;
                 }
-            } //opens home area again
+            } 
+            //opens home area again
             else if (rectPoint(new Vector2(Window.Width / 2 - 50, 60), new Vector2(80, 80), Mouse.Position))
             {
                 if (Mouse.IsButtonPressed(MouseButton.Left))
@@ -163,6 +167,24 @@ partial class Program : Simulation
                     outs[0].Play();
 
                     settingsOpen = false;
+                    infoOpen = false;
+                }
+            } 
+            //closes everything
+            else if (rectPoint(new Vector2(Window.Width / 2 + 140, 60), new Vector2(80, 80), Mouse.Position))
+            { if (Mouse.IsButtonPressed(MouseButton.Left)) { Environment.Exit(0); } } 
+            //info menu
+            else if (rectPoint(new Vector2(Window.Width / 2 + 50, 60), new Vector2(80, 80), Mouse.Position))
+            {
+                if (Mouse.IsButtonPressed(MouseButton.Left))
+                {
+                    if (outs[0].PlaybackState is PlaybackState.Playing) { outs[0].Stop(); }
+                    ins[0].CurrentTime = new TimeSpan(0L);
+                    outs[0].Init(ins[0]);
+                    outs[0].Play();
+
+                    settingsOpen = false;
+                    infoOpen = true;
                 }
             }
 
@@ -183,7 +205,7 @@ partial class Program : Simulation
             canv.FontSize(75);
             canv.DrawText("Start", new Vector2(Window.Width / 2, Window.Height / 2 + 80), Alignment.Center);
 
-            if (rectPoint(new Vector2(Window.Width / 2, Window.Height / 2 + 80), new Vector2(500, 150), Mouse.Position) && !settingsOpen)
+            if (rectPoint(new Vector2(Window.Width / 2, Window.Height / 2 + 80), new Vector2(500, 150), Mouse.Position) && !settingsOpen && !infoOpen)
             {
                 if (Mouse.IsButtonPressed(MouseButton.Left))
                 {
@@ -224,7 +246,7 @@ partial class Program : Simulation
             canv.FontSize(15);
             canv.DrawText("Fullscreen", new Vector2(80, setMenuY + 220), Alignment.CenterLeft);
 
-            if (rectPoint(new Vector2(40, setMenuY + 220), new Vector2(50, 50), Mouse.Position))
+            if (rectPoint(new Vector2(40, setMenuY + 220), new Vector2(50, 50), Mouse.Position) && settingsOpen)
             {
                 if (Mouse.IsButtonPressed(MouseButton.Left))
                 {
@@ -242,7 +264,7 @@ partial class Program : Simulation
                 }
             }
 
-            if (rectPoint(new Vector2(40, setMenuY + 160), new Vector2(50, 50), Mouse.Position))
+            if (rectPoint(new Vector2(40, setMenuY + 160), new Vector2(50, 50), Mouse.Position) && settingsOpen)
             {
                 if (Mouse.IsButtonPressed(MouseButton.Left))
                 {
@@ -260,7 +282,7 @@ partial class Program : Simulation
                 }
             }
 
-            if (rectPoint(new Vector2(100, setMenuY + 160), new Vector2(50, 50), Mouse.Position))
+            if (rectPoint(new Vector2(100, setMenuY + 160), new Vector2(50, 50), Mouse.Position) && settingsOpen)
             {
                 if (Mouse.IsButtonPressed(MouseButton.Left))
                 {
@@ -278,15 +300,47 @@ partial class Program : Simulation
                 }
             }
 
-            if (Keyboard.IsKeyPressed(Key.LeftArrow))
+            //info menu
+
+            canv.Fill(SECONDARY);
+            canv.DrawRect(new Vector2(0, 120 + infoMenuY), new Vector2(Window.Width, Window.Height), Alignment.TopLeft);
+
+            canv.Fill(TEXT);
+            canv.Font(smallTxt);
+            canv.FontSize(35);
+            canv.DrawText("This launcher is a game launcher made by viylouu in 2023.", new Vector2(20, infoMenuY + 160), Alignment.CenterLeft);
+            canv.DrawText("It includes multiple games hand coded by viylouu himself.", new Vector2(20, infoMenuY + 200), Alignment.CenterLeft);
+            canv.DrawText("The launcher is open sourced and all code can be found", new Vector2(20, infoMenuY + 250), Alignment.CenterLeft);
+            canv.DrawText("in the github listed on the itch.io page.", new Vector2(20, infoMenuY + 290), Alignment.CenterLeft);
+            canv.DrawText("All assets can be found on github or in the files for the", new Vector2(20, infoMenuY + 340), Alignment.CenterLeft);
+            canv.DrawText("game itself, which includes all fonts, audio, sprites, and more.", new Vector2(20, infoMenuY + 380), Alignment.CenterLeft);
+            canv.DrawText("The libraries used by viylouu are Simulation Framework, and", new Vector2(20, infoMenuY + 430), Alignment.CenterLeft);
+            canv.DrawText("NAudio.  Check out the Simulation Framework discord if you", new Vector2(20, infoMenuY + 470), Alignment.CenterLeft);
+            canv.DrawText("want help when editing or modding this launcher.", new Vector2(20, infoMenuY + 510), Alignment.CenterLeft);
+            canv.DrawText("Links:", new Vector2(20, infoMenuY + 570), Alignment.CenterLeft);
+            canv.DrawText(@"github.com/Redninja106/simulationframework", new Vector2(20, infoMenuY + 610), Alignment.CenterLeft);
+            canv.DrawText(@"github.com/viylouu/viylouuInc-Launcher", new Vector2(20, infoMenuY + 650), Alignment.CenterLeft);
+            canv.DrawText(@"viylow.itch.io/viylouuinc-game-launcher", new Vector2(20, infoMenuY + 690), Alignment.CenterLeft);
+
+            if (Keyboard.IsKeyPressed(Key.LeftArrow) && !settingsOpen && !infoOpen)
             {
+                if (outs[1].PlaybackState is PlaybackState.Playing) { outs[1].Stop(); }
+                ins[1].CurrentTime = new TimeSpan(0L);
+                outs[1].Init(ins[1]);
+                outs[1].Play();
+
                 gameSelected -= 1;
                 if (gameSelected < 0)
                 { gameSelected = games.Length - 1; }
             }
 
-            if (Keyboard.IsKeyPressed(Key.RightArrow))
+            if (Keyboard.IsKeyPressed(Key.RightArrow) && !settingsOpen && !infoOpen)
             {
+                if (outs[1].PlaybackState is PlaybackState.Playing) { outs[1].Stop(); }
+                ins[1].CurrentTime = new TimeSpan(0L);
+                outs[1].Init(ins[1]);
+                outs[1].Play();
+
                 gameSelected += 1;
                 if (gameSelected > games.Length - 1)
                 { gameSelected = 0; }
@@ -321,6 +375,15 @@ partial class Program : Simulation
         else
         {
             setMenuY += (Window.Height - setMenuY) / 5;
+        }
+
+        if (infoOpen)
+        {
+            infoMenuY += -infoMenuY / 5;
+        }
+        else
+        {
+            infoMenuY += (Window.Height - infoMenuY) / 5;
         }
     }
 
