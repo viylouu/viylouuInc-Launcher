@@ -1,6 +1,8 @@
-﻿using System;
+﻿using SimulationFramework.Drawing;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,12 +16,19 @@ namespace viylouuInc_Launcher
         {
             if (!started)
             {
-
+                started = true;
             }
             else
-            { 
-                
+            {
+                ICanvas canv = Graphics.GetOutputCanvas();
             }
+        }
+
+        public class ssData
+        { 
+            public Vector2[] topLefts { get; set; }
+
+            public Vector2[] scales { get; set; }
         }
     }
 }
