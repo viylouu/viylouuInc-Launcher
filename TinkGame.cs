@@ -1,4 +1,5 @@
-﻿using SimulationFramework.Drawing;
+﻿using SimulationFramework;
+using SimulationFramework.Drawing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,23 +13,49 @@ namespace viylouuInc_Launcher
     {
         public bool started = false;
 
+        public ITexture props = null;
+
+        public int pixSize = 6;
+
         public void Update()
         {
             if (!started)
             {
+                props = Graphics.LoadTexture(@"Assets\Sprites\Tink Assets\Props.png");
+
                 started = true;
             }
             else
             {
                 ICanvas canv = Graphics.GetOutputCanvas();
+
+                canv.Clear(Color.Black);
+
+                //draws test plant
+                canv.DrawTexture(
+                    props, 
+                    new Rectangle(
+                        new Vector2(
+                            propsD.topLefts[0].X, 
+                            propsD.topLefts[0].Y
+                        ), 
+                        new Vector2(
+                            propsD.scales[0].X, 
+                            propsD.scales[0].Y)
+                        ), 
+                    new Rectangle(
+                        new Vector2(
+                            Window.Width / 2, 
+                            Window.Height / 2
+                        ), 
+                        new Vector2(
+                            propsD.scales[0].X * pixSize, 
+                            propsD.scales[0].Y * pixSize
+                        )
+                    )
+                );
+
             }
-        }
-
-        public class ssData
-        { 
-            public Vector2[] topLefts { get; set; }
-
-            public Vector2[] scales { get; set; }
         }
     }
 }
