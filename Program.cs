@@ -49,7 +49,7 @@ partial class Program : Simulation
         name = "Cells",
         desc = "Cells is a simple cellulaur automata engine",
         updater = new CellsGame().Update,
-        ver = 0.1f
+        ver = "0.1.1"
     };
 
     gameInfo lisk = new gameInfo
@@ -57,7 +57,7 @@ partial class Program : Simulation
         name = "Lisk",
         desc = "Lisk is a 3d raycaster in the doom style",
         updater = new LiskGame().Update,
-        ver = 0.0f
+        ver = "0.0 BETA"
     };
 
     gameInfo tink = new gameInfo
@@ -65,7 +65,7 @@ partial class Program : Simulation
         name = "Tink",
         desc = "Tink is a 2d RPG game",
         updater = new TinkGame().Update,
-        ver = 0.0f
+        ver = "0.0 BETA"
     };
 
     gameInfo[] games = null;
@@ -103,8 +103,8 @@ partial class Program : Simulation
 
         games = new gameInfo[] {
             cells,
-            //lisk,
-            tink
+            lisk
+            //tink
         };
     }
 
@@ -429,7 +429,7 @@ partial class Program : Simulation
         public string desc { get; set; }
         public string name { get; set; }
 
-        public float ver { get; set; }
+        public string ver { get; set; }
     }
 
     void ApplyColors(ref Color txt, ref Color bg, ref Color pri, ref Color sec, ref Color acc, bool light, int pallate, ref string pallatename)

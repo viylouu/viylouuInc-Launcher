@@ -4,6 +4,7 @@ using SimulationFramework.Input;
 using System.Numerics;
 using ImGuiNET;
 using Silk.NET.OpenGL;
+using NAudio.Wave;
 
 namespace viylouuInc_Launcher
 {
@@ -29,6 +30,7 @@ namespace viylouuInc_Launcher
                 new Color(250, 197, 105), 
                 new Color(209, 115, 44)
             },
+            simpCol = new Color(255, 196, 117),
             erase = false,
             move = true,
             moveChance = 90.00f,
@@ -44,6 +46,7 @@ namespace viylouuInc_Launcher
                 new Color(70, 169, 240),
                 new Color(38, 103, 209)
             },
+            simpCol = new Color(102, 141, 189),
             erase = false,
             move = true,
             moveChance = 98.55f,
@@ -59,6 +62,7 @@ namespace viylouuInc_Launcher
                 new Color(87, 63, 38), 
                 new Color(48, 28, 16)
             },
+            simpCol = new Color(82, 54, 38),
             erase = false,
             move = true,
             moveChance = 95.85f,
@@ -74,6 +78,7 @@ namespace viylouuInc_Launcher
                 new Color(86, 86, 87), 
                 new Color(43, 43, 43)
             },
+            simpCol = new Color(99, 99, 99),
             erase = false,
             move = false,
             moveChance = 0f,
@@ -86,6 +91,7 @@ namespace viylouuInc_Launcher
             name = "Eraser",
             cols = new Color[] 
             { new Color(0, 0, 0) },
+            simpCol = new Color(0, 0, 0),
             erase = true,
             move = false,
             moveChance = 0,
@@ -119,6 +125,8 @@ namespace viylouuInc_Launcher
 
         Vector2 drawPos = new Vector2(0, 0);
 
+        public bool simpleGraphics = false;
+
         public void Update()
         {
             if (!strted)
@@ -148,11 +156,6 @@ namespace viylouuInc_Launcher
             else
             {
                 ICanvas canv = Graphics.GetOutputCanvas();
-
-                if (Mouse.IsButtonDown(MouseButton.Left))
-                { drawPos += (Mouse.Position - drawPos) / 10; }
-                else
-                { drawPos = Mouse.Position; }
 
                 canv.Clear(new Color(32, 32, 33));
 
@@ -285,7 +288,7 @@ namespace viylouuInc_Launcher
                                 if (matrix[dx, dy] == null) 
                                 { 
                                     Cell c = cloneProps(cells[cellSel]); 
-                                    c.color = Color.Lerp(c.cols[0], c.cols[1], r.Next(0, 1000) / 1000f); 
+                                    c.color = Color.Lerp(c.cols[0], c.cols[1], r.Next(0, 1000) / 1000f);
                                     
                                     matrix[dx, dy] = c; 
                                 } 
@@ -300,8 +303,18 @@ namespace viylouuInc_Launcher
 
                 if (Keyboard.IsKeyDown(Key.LeftControl))
                 {
-                    canv.Fill(new Color(110, 255, 110, 100));
-                    canv.DrawRect(new Vector2((int)Math.Round(drawPos.X / pixSize) * pixSize - (float)Math.Round((float)drawRad * pixSize / 2), (int)Math.Round(drawPos.Y / pixSize) * pixSize - (float)Math.Round((float)drawRad * pixSize / 2)), new Vector2(drawRad * pixSize, drawRad * pixSize));
+                    if (simpleGraphics)
+                    { canv.Fill(new Color(110, 255, 110, 255)); }
+                    else
+                    { canv.Fill(new Color(110, 255, 110, 100)); }
+
+                    canv.DrawRect(
+                        new Vector2(
+                            (int)Math.Round(drawPos.X / pixSize) * pixSize - (float)Math.Round((float)drawRad * pixSize / 2), 
+                            (int)Math.Round(drawPos.Y / pixSize) * pixSize - (float)Math.Round((float)drawRad * pixSize / 2)
+                        ), 
+                        new Vector2((float)Math.Round((float)drawRad / 2 - .1f) * 2 * pixSize, (float)Math.Round((float)drawRad / 2 - .1f) * 2 * pixSize)
+                    );
 
                     drawRad += (int)Mouse.ScrollWheelDelta;
                     if (drawRad <= 0)
@@ -313,6 +326,19 @@ namespace viylouuInc_Launcher
                     cellSel = cellSel % cells.Length;
                     if (cellSel < 0)
                     { cellSel = cells.Length - 1; }
+                }
+
+                if(Mouse.IsButtonDown(MouseButton.Left) && simpleGraphics)
+                { 
+                    canv.Fill(new Color(110, 255, 110, 255));
+
+                    canv.DrawRect(
+                        new Vector2(
+                            (int)Math.Round(drawPos.X / pixSize) * pixSize - (float)Math.Round((float)drawRad * pixSize / 2),
+                            (int)Math.Round(drawPos.Y / pixSize) * pixSize - (float)Math.Round((float)drawRad * pixSize / 2)
+                        ),
+                        new Vector2((float)Math.Round((float)drawRad / 2 - .1f) * 2 * pixSize, (float)Math.Round((float)drawRad / 2 - .1f) * 2 * pixSize)
+                    );
                 }
 
                 canv.Fill(Color.White);
@@ -336,6 +362,15 @@ namespace viylouuInc_Launcher
                     ImGui.SliderInt("Pixel Size", ref pixSize, 1, 10);
 
                     ImGui.Checkbox("Debug Mode", ref debugMode);
+
+                    bool storedSimple = simpleGraphics;
+
+                    ImGui.Checkbox("Simple Mode", ref simpleGraphics);
+
+                    if (storedSimple != simpleGraphics)
+                    {
+                        recentTexUpd = true;
+                    }
 
                     ImGui.SliderInt("Tick Speed", ref changeFPS, 30, 360);
 
@@ -389,6 +424,11 @@ namespace viylouuInc_Launcher
             updMatrix = new bool[mSX, mSY];
 
             bool texUpdated = false;
+
+            if (Mouse.IsButtonDown(MouseButton.Left))
+            { drawPos += (Mouse.Position - drawPos) / 5; }
+            else
+            { drawPos = Mouse.Position; }
 
             for (int x = 0; x < mSX; x++)
             {
@@ -518,9 +558,17 @@ namespace viylouuInc_Launcher
                                         if (!swapped)
                                         { tex.GetPixel(x, y) = new Color(0, 0, 0, 0); }
                                         else
-                                        { tex.GetPixel(x, y) = matrix[x, y].color; }
+                                        {
+                                            if (simpleGraphics)
+                                            { tex.GetPixel(x, y) = matrix[x, y].simpCol; }
+                                            else
+                                            { tex.GetPixel(x, y) = matrix[x, y].color; }
+                                        }
 
-                                        tex.GetPixel(x + (int)moveDir.X, y + (int)moveDir.Y) = matrix[x + (int)moveDir.X, y + (int)moveDir.Y].color;
+                                        if (simpleGraphics)
+                                        { tex.GetPixel(x + (int)moveDir.X, y + (int)moveDir.Y) = matrix[x + (int)moveDir.X, y + (int)moveDir.Y].simpCol; }
+                                        else
+                                        { tex.GetPixel(x + (int)moveDir.X, y + (int)moveDir.Y) = matrix[x + (int)moveDir.X, y + (int)moveDir.Y].color; }
 
                                         texUpdated = true;
                                     }
@@ -528,7 +576,10 @@ namespace viylouuInc_Launcher
                                     {
                                         matrix[x, y].firstFrame = true;
 
-                                        tex.GetPixel(x, y) = matrix[x, y].color;
+                                        if (simpleGraphics)
+                                        { tex.GetPixel(x, y) = matrix[x, y].simpCol; }
+                                        else
+                                        { tex.GetPixel(x, y) = matrix[x, y].color; }
 
                                         texUpdated = true;
                                     }
@@ -625,13 +676,24 @@ namespace viylouuInc_Launcher
                                         matrix[x, y].nFreeFall = false;
                                     }
                                 }
+
+                                if (recentTexUpd)
+                                {
+                                    if (simpleGraphics)
+                                    { tex.GetPixel(x, y) = matrix[x, y].simpCol; }
+                                    else
+                                    { tex.GetPixel(x, y) = matrix[x, y].color; }
+                                }
                             }
                         }
                         else if (!matrix[x, y].firstFrame || recentTexUpd)
                         {
                             matrix[x, y].firstFrame = true;
 
-                            tex.GetPixel(x, y) = matrix[x, y].color;
+                            if (simpleGraphics)
+                            { tex.GetPixel(x, y) = matrix[x, y].simpCol; }
+                            else
+                            { tex.GetPixel(x, y) = matrix[x, y].color; }
 
                             texUpdated = true;
                         }
@@ -654,6 +716,7 @@ namespace viylouuInc_Launcher
             c.moveChance = cellToClone.moveChance;
             c.stack = cellToClone.stack;
             c.liquid = cellToClone.liquid;
+            c.simpCol = cellToClone.simpCol;
 
             return c;
 
@@ -666,6 +729,7 @@ namespace viylouuInc_Launcher
 
             public Color[] cols { get; set; }
             public Color color { get; set; }
+            public Color simpCol { get; set; }
 
             public bool erase { get; set; }
 
