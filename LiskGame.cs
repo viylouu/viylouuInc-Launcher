@@ -33,8 +33,8 @@ namespace viylouuInc_Launcher
         {
             if (!started)
             {
-                maMaSX = Window.Width / pixSize / distBetwLines;
-                maMaSY = Window.Height / pixSize / distBetwLines;
+                maMaSX = Window.Width / pixSize / distBetwLines + 1;
+                maMaSY = Window.Height / pixSize / distBetwLines + 1;
 
                 mapMat = new wallObj[maMaSX, maMaSY];
 
@@ -125,10 +125,9 @@ namespace viylouuInc_Launcher
                                 {
                                     canv.Fill(Color.LightGray);
 
-                                    for (int i = 0; i < x * distBetwLines - mapMat[x, y].connectorX * distBetwLines; i++)
-                                    {
-                                        canv.DrawRect(new Vector2(0, 0), new Vector2(pixSize, pixSize), Alignment.Center);
-                                    }
+                                    canv.StrokeWidth(pixSize);
+
+                                    canv.DrawLine(x * pixdivdist, y * pixdivdist, mapMat[x, y].connectorX * pixdivdist, mapMat[x, y].connectorY * pixdivdist);
                                 }
 
                                 canv.Fill(Color.White);
