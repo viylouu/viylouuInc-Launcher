@@ -34,17 +34,29 @@ namespace viylouuInc_Launcher
                 //draws test plant
                 canv.DrawTexture(
                     props,
+                    new Rectangle(
                         new Vector2(
-                            Window.Width / 2, 
+                            0,
+                            16
+                        ),
+                        new Vector2(
+                            16,
+                            16
+                        ),
+                        Alignment.TopLeft
+                    ),
+                    new Rectangle(
+                        new Vector2(
+                            Window.Width / 2,
                             Window.Height / 2
-                        ), 
+                        ),
                         new Vector2(
-                            16 * pixSize, 
+                            16 * pixSize,
                             16 * pixSize
                         ),
-                    Alignment.Center
+                        Alignment.Center
+                    )
                 );
-
             }
         }
     }

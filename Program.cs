@@ -103,8 +103,8 @@ partial class Program : Simulation
 
         games = new gameInfo[] {
             cells,
-            lisk
-            //tink
+            lisk,
+            tink
         };
     }
 
@@ -130,26 +130,13 @@ partial class Program : Simulation
             DrawModernBox(canv, new Vector2(Window.Width / 2 + 50, 60), new Vector2(80, 80), 45, PRIMARY);
             DrawModernBox(canv, new Vector2(Window.Width / 2 + 140, 60), new Vector2(80, 80), 45, PRIMARY);
 
-            canv.Translate(new Vector2(Window.Width / 2 - 140, 60));
-            canv.Rotate(180 * (float.Pi / 180));
-            canv.DrawTexture(settingsIcon, new Vector2(0, 0), new Vector2(60, 60), Alignment.Center);
+            canv.DrawTexture(settingsIcon, new Vector2(Window.Width / 2 - 140, 60), new Vector2(60, 60), Alignment.Center);
 
-            canv.ResetState();
-            canv.Translate(new Vector2(Window.Width / 2 - 50, 60));
-            canv.Rotate(180 * (float.Pi / 180));
-            canv.DrawTexture(homeIcon, new Vector2(0, 0), new Vector2(60, 60), Alignment.Center);
+            canv.DrawTexture(homeIcon, new Vector2(Window.Width / 2 - 50, 60), new Vector2(60, 60), Alignment.Center);
 
-            canv.ResetState();
-            canv.Translate(new Vector2(Window.Width / 2 + 50, 60));
-            canv.Rotate(180 * (float.Pi / 180));
-            canv.DrawTexture(infoIcon, new Vector2(0, 0), new Vector2(60, 60), Alignment.Center);
+            canv.DrawTexture(infoIcon, new Vector2(Window.Width / 2 + 50, 60), new Vector2(60, 60), Alignment.Center);
 
-            canv.ResetState();
-            canv.Translate(new Vector2(Window.Width / 2 + 140, 60));
-            canv.Rotate(180 * (float.Pi / 180));
-            canv.DrawTexture(closeIcon, new Vector2(0, 0), new Vector2(60, 60), Alignment.Center);
-
-            canv.ResetState();
+            canv.DrawTexture(closeIcon, new Vector2(Window.Width / 2 + 140, 60), new Vector2(60, 60), Alignment.Center);
 
             //opens settings
             if (rectPoint(new Vector2(Window.Width / 2 - 140, 60), new Vector2(80, 80), Mouse.Position))
