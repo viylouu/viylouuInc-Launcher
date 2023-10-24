@@ -299,7 +299,9 @@ namespace viylouuInc_Launcher
                     recentTexUpd = true;
                 }
 
-                canv.DrawTexture(tex, Vector2.Zero, new Vector2(mSX * pixSize, mSY * pixSize), Alignment.TopLeft);
+                canv.Scale(1, -1);
+                canv.DrawTexture(tex, Vector2.Zero, new Vector2(mSX * pixSize, mSY * pixSize), Alignment.BottomLeft);
+                canv.ResetState();
 
                 if (Keyboard.IsKeyDown(Key.LeftControl))
                 {
