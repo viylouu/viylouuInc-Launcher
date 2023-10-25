@@ -84,6 +84,8 @@ partial class Program : Simulation
     ITexture infoIcon = null;
     ITexture closeIcon = null;
 
+    bool vsync = false;
+
     public override void OnInitialize()
     {
         Window.Title = "viylouu games";
@@ -242,6 +244,16 @@ partial class Program : Simulation
             canv.FontSize(15);
             canv.DrawText("Fullscreen", new Vector2(80, setMenuY + 220), Alignment.CenterLeft);
 
+            DrawModernBox(canv, new Vector2(40, setMenuY + 280), new Vector2(50, 50), 45, PRIMARY);
+
+            canv.Fill(TEXT);
+            canv.Font(smallTxt);
+            canv.FontSize(35);
+            canv.DrawText(vsync ? "*" : "-", new Vector2(40, setMenuY + 280), Alignment.Center);
+
+            canv.FontSize(15);
+            canv.DrawText("Vsync", new Vector2(80, setMenuY + 280), Alignment.CenterLeft);
+
             if (rectPoint(new Vector2(40, setMenuY + 220), new Vector2(50, 50), Mouse.Position) && settingsOpen)
             {
                 if (Mouse.IsButtonPressed(MouseButton.Left))
@@ -293,6 +305,21 @@ partial class Program : Simulation
                     { pallate = ColorManager.pallates.Length - 1; }
 
                     ApplyColors(ref TEXT, ref BG, ref PRIMARY, ref SECONDARY, ref ACCENT, lightMode, pallate, ref pallateName);
+                }
+            }
+
+            if (rectPoint(new Vector2(40, setMenuY + 280), new Vector2(50, 50), Mouse.Position) && settingsOpen)
+            {
+                if (Mouse.IsButtonPressed(MouseButton.Left))
+                {
+                    if (outs[0].PlaybackState is PlaybackState.Playing) { outs[0].Stop(); }
+                    ins[0].CurrentTime = new TimeSpan(0L);
+                    outs[0].Init(ins[0]);
+                    outs[0].Play();
+
+                    vsync = !vsync;
+
+                    Graphics.SwapInterval = vsync ? 1 : 0;
                 }
             }
 
