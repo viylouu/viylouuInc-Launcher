@@ -23,6 +23,8 @@ namespace viylouuInc_Launcher
 
         public bool debugMode = false;
 
+        public bool fixedUpdate = true;
+
         public Cell sand = new Cell {
             name = "Sand",
             cols = new Color[] 
@@ -161,7 +163,11 @@ namespace viylouuInc_Launcher
 
                 canv.Clear(new Color(32, 32, 33));
 
-                FixUpdStarter(FixUpd, (DateTime.UtcNow - lastItTime).TotalSeconds);
+                if (fixedUpdate)
+                {
+                    FixUpdStarter(FixUpd, (DateTime.UtcNow - lastItTime).TotalSeconds);
+                }
+                else { processCells(); }
                 lastItTime = DateTime.UtcNow;
 
                 if (Mouse.IsButtonReleased(MouseButton.Left) && started)
@@ -399,6 +405,8 @@ namespace viylouuInc_Launcher
                         fps = 1f / changeFPS;
                     }
 
+                    ImGui.Checkbox("Fixed Update", ref fixedUpdate);
+
                     if (ImGui.Button("Clear"))
                     {
                         mSX = (int)Math.Round((double)Window.Width / pixSize);
@@ -439,6 +447,9 @@ namespace viylouuInc_Launcher
         }
 
         public void FixUpd()
+        { processCells(); }
+
+        public void processCells()
         {
             updMatrix = new bool[mSX, mSY];
 
@@ -721,7 +732,7 @@ namespace viylouuInc_Launcher
             }
 
             if (texUpdated || recentTexUpd)
-            { tex.ApplyChanges(); recentTexUpd = recentTexUpd? false : recentTexUpd; }
+            { tex.ApplyChanges(); recentTexUpd = recentTexUpd ? false : recentTexUpd; }
         }
 
         public Cell cloneProps(Cell cellToClone)
