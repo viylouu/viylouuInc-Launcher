@@ -131,6 +131,8 @@ namespace viylouuInc_Launcher
         {
             if (!strted)
             {
+                set = false;
+
                 mSX = (int)Math.Round((double)Window.Width / pixSize);
                 mSY = (int)Math.Round((double)Window.Height / pixSize);
 
@@ -359,6 +361,21 @@ namespace viylouuInc_Launcher
 
                 if (set)
                 {
+                    ImGui.Begin("Menu");
+
+                    if (ImGui.Button("Quit Game"))
+                    {
+                        Program.gameStarted = false;
+                        strted = false;
+                    }
+
+                    if (ImGui.Button("Quit Launcher"))
+                    {
+                        Environment.Exit(0);
+                    }
+
+                    ImGui.End();
+
                     ImGui.Begin("Settings");
 
                     ImGui.SliderInt("Pixel Size", ref pixSize, 1, 10);

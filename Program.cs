@@ -70,7 +70,7 @@ partial class Program : Simulation
 
     gameInfo[] games = null;
 
-    bool gameStarted = false;
+    public static bool gameStarted = false;
 
     int pallate = 0;
     string pallateName = "null";
