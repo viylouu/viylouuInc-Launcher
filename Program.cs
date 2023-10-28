@@ -68,6 +68,14 @@ partial class Program
         ver = "0.0 BETA"
     };
 
+    static gameInfo vox = new gameInfo
+    {
+        name = "Vox",
+        desc = "Vox is a 3d voxel engine",
+        updater = new VoxGame().Update,
+        ver = "0.0 ALPHA"
+    };
+
     static gameInfo[] games = null;
 
     public static bool gameStarted = false;
@@ -106,7 +114,8 @@ partial class Program
         games = new gameInfo[] {
             cells,
             lisk,
-            tink
+            tink,
+            vox
         };
     }
 
