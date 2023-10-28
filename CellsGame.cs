@@ -32,7 +32,7 @@ namespace viylouuInc_Launcher
                 new Color(250, 197, 105), 
                 new Color(209, 115, 44)
             },
-            simpCol = new Color(255, 196, 117),
+            simpCol = new Color(255, 165, 120),
             erase = false,
             move = true,
             moveChance = 90.00f,

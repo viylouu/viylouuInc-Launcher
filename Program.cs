@@ -88,7 +88,6 @@ partial class Program
 
     static void Init()
     {
-
         Window.Title = "viylouu games";
 
         settingsIcon = Graphics.LoadTexture(@"Assets\Sprites\Menu-SettingsIcon.png");
