@@ -13,6 +13,8 @@ namespace viylouuInc_Launcher
         public int stPixSize = 6;
         public int pixSize = 6;
 
+        public int lightResolution = 3;
+
         public int drawRad = 1;
 
         public bool recentTexUpd = false;
@@ -125,9 +127,13 @@ namespace viylouuInc_Launcher
 
         public ITexture tex = null;
 
+        //public ITexture light = null;
+
         Vector2 drawPos = new Vector2(0, 0);
 
         public bool simpleGraphics = false;
+
+        Vector2 stMP = new Vector2(0, 0);
 
         public void Update()
         {
@@ -144,6 +150,7 @@ namespace viylouuInc_Launcher
                 lastItTime = DateTime.UtcNow;
 
                 tex = Graphics.CreateTexture(mSX, mSY, TextureOptions.None);
+                //light = Graphics.CreateTexture(mSX, mSY, TextureOptions.None);
 
                 recentTexUpd = true;
 
@@ -186,7 +193,9 @@ namespace viylouuInc_Launcher
                         updMatrix = new bool[mSX, mSY];
 
                         if (tex != null) { tex.Dispose(); }
+                        //if (light != null) { light.Dispose(); }
                         tex = Graphics.CreateTexture(mSX, mSY, TextureOptions.None);
+                        //light = Graphics.CreateTexture(mSX, mSY, TextureOptions.None);
 
                         recentTexUpd = true;
                     }
@@ -203,7 +212,9 @@ namespace viylouuInc_Launcher
                         updMatrix = new bool[mSX, mSY];
 
                         if (tex != null) { tex.Dispose(); }
+                        //if (light != null) { light.Dispose(); }
                         tex = Graphics.CreateTexture(mSX, mSY, TextureOptions.None);
+                        //light = Graphics.CreateTexture(mSX, mSY, TextureOptions.None);
 
                         recentTexUpd = true;
 
@@ -311,6 +322,8 @@ namespace viylouuInc_Launcher
                 canv.DrawTexture(tex, Vector2.Zero, new Vector2(mSX * pixSize, mSY * pixSize), Alignment.BottomLeft);
                 canv.ResetState();
 
+                //if (!simpleGraphics) { canv.DrawTexture(light, Vector2.Zero, new Vector2(mSX * pixSize, mSY * pixSize), Alignment.TopLeft); }
+
                 if (Keyboard.IsKeyDown(Key.LeftControl))
                 {
                     if (simpleGraphics)
@@ -395,6 +408,11 @@ namespace viylouuInc_Launcher
                     if (storedSimple != simpleGraphics)
                     {
                         recentTexUpd = true;
+                    }
+
+                    if (!simpleGraphics)
+                    {
+                        ImGui.SliderInt("Light Res", ref lightResolution, 1, 15);
                     }
 
                     ImGui.SliderInt("Tick Speed", ref changeFPS, 30, 360);
@@ -728,8 +746,27 @@ namespace viylouuInc_Launcher
                             texUpdated = true;
                         }
                     }
+
+                    /*
+                    if (!simpleGraphics && stMP != Mouse.Position)
+                    {
+                        float dist = (float)Math.Sqrt(
+                            (x * pixSize - Mouse.Position.X) *
+                            (x * pixSize - Mouse.Position.X) +
+                            (y * pixSize - Mouse.Position.Y) *
+                            (y * pixSize - Mouse.Position.Y)
+                        ) / 255f;
+
+                        light.GetPixel(x, y) = new Color(0, 0, 0,
+                            (float)Math.Round(dist / 3 * lightResolution) / lightResolution
+                        );
+                    }
+                    */
                 }
             }
+
+            //if (!simpleGraphics && stMP != Mouse.Position)
+            //{ light.ApplyChanges(); stMP = Mouse.Position; }
 
             if (texUpdated || recentTexUpd)
             { tex.ApplyChanges(); recentTexUpd = recentTexUpd ? false : recentTexUpd; }
