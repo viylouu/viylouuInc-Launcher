@@ -22,7 +22,8 @@ partial class Program
 
     static WaveStream[] ins = new WaveStream[] {
         new WaveFileReader(Directory.GetCurrentDirectory() + @"\Assets\Audio\buttonClick.wav"),
-        new WaveFileReader(Directory.GetCurrentDirectory() + @"\Assets\Audio\switchTab.wav")
+        new WaveFileReader(Directory.GetCurrentDirectory() + @"\Assets\Audio\switchTab.wav"),
+        new WaveFileReader(Directory.GetCurrentDirectory() + @"\Assets\Audio\startup.wav")
     };
 
     static WaveOutEvent[] outs = new WaveOutEvent[0];
@@ -102,6 +103,9 @@ partial class Program
         outs = new WaveOutEvent[ins.Length];
         for (int i = 0; i < outs.Length; i++)
         { outs[i] = new WaveOutEvent(); }
+
+        outs[2].Init(ins[2]);
+        outs[2].Play();
 
         games = new gameInfo[] {
             cells,
