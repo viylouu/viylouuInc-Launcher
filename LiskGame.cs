@@ -25,7 +25,7 @@ namespace viylouuInc_Launcher
             {
                 ICanvas canv = Graphics.GetOutputCanvas();
 
-                canv.Clear(new Color(71, 64, 92));
+                canv.Clear(new Color(0, 0, 0));
             }
         }
 
