@@ -1,4 +1,5 @@
-﻿using SimulationFramework;
+﻿using ImGuiNET;
+using SimulationFramework;
 using SimulationFramework.Drawing;
 using SimulationFramework.Input;
 using System;
@@ -15,6 +16,8 @@ namespace viylouuInc_Launcher
     {
         public bool started = false;
 
+        public bool men = false;
+
         public void Update()
         {
             if (!started)
@@ -23,6 +26,27 @@ namespace viylouuInc_Launcher
             }
             else
             {
+                if (Keyboard.IsKeyPressed(Key.Esc))
+                { men = !men; }
+
+                if (men)
+                {
+                    ImGui.Begin("Menu");
+
+                    if (ImGui.Button("Quit Game"))
+                    {
+                        Program.gameStarted = false;
+                        started = false;
+                    }
+
+                    if (ImGui.Button("Quit Launcher"))
+                    {
+                        Environment.Exit(0);
+                    }
+
+                    ImGui.End();
+                }
+
                 ICanvas canv = Graphics.GetOutputCanvas();
 
                 canv.Clear(new Color(0, 0, 0));
