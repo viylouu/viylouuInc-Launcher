@@ -57,7 +57,7 @@ namespace viylouuInc_Launcher
 
                 canv.Clear(new Color(0, 0, 0));
 
-                canv.DrawTexture(toronoiTest, new Vector2(Window.Width / 2, Window.Height / 2), new Vector2(Window.Height, Window.Height), Alignment.Center);
+                //canv.DrawTexture(toronoiTest, new Vector2(Window.Width / 2, Window.Height / 2), new Vector2(Window.Height, Window.Height), Alignment.Center);
             }
         }
 

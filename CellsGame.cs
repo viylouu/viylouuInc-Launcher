@@ -410,10 +410,10 @@ namespace viylouuInc_Launcher
                         recentTexUpd = true;
                     }
 
-                    if (!simpleGraphics)
-                    {
-                        ImGui.SliderInt("Light Res", ref lightResolution, 1, 15);
-                    }
+                    //if (!simpleGraphics)
+                    //{
+                    //    ImGui.SliderInt("Light Res", ref lightResolution, 1, 15);
+                    //}
 
                     ImGui.SliderInt("Tick Speed", ref changeFPS, 30, 360);
 
