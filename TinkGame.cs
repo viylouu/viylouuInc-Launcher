@@ -25,6 +25,7 @@ namespace viylouuInc_Launcher
         {
             if (!started)
             {
+                if (props != null) { props.Dispose(); }
                 props = Graphics.LoadTexture(@"Assets\Sprites\Tink Assets\Woods-Overworld\Props.png");
 
                 started = true;

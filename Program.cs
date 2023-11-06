@@ -72,6 +72,7 @@ partial class Program
     static gameInfo[] games = null;
 
     public static bool gameStarted = false;
+    public static int framesUntilGameStarted = 0;
 
     static int pallate = 0;
     static string pallateName = "null";
@@ -377,6 +378,8 @@ partial class Program
         {
             games[gameSelected].updater.Invoke();
         }
+        else
+        { framesUntilGameStarted++; }
     }
 
     static void UpdSep(double delta, Action act)
