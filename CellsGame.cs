@@ -3,8 +3,6 @@ using SimulationFramework;
 using SimulationFramework.Input;
 using System.Numerics;
 using ImGuiNET;
-using Silk.NET.OpenGL;
-using NAudio.Wave;
 
 namespace viylouuInc_Launcher
 {
@@ -135,6 +133,8 @@ namespace viylouuInc_Launcher
 
         Vector2 stMP = new Vector2(0, 0);
 
+        public float time = 0;
+
         public void Update()
         {
             if (!strted)
@@ -174,7 +174,7 @@ namespace viylouuInc_Launcher
                 {
                     FixUpdStarter(FixUpd, (DateTime.UtcNow - lastItTime).TotalSeconds);
                 }
-                else { processCells(); }
+                else { processCells(); time += Time.DeltaTime; }
                 lastItTime = DateTime.UtcNow;
 
                 if (Mouse.IsButtonReleased(MouseButton.Left) && started)
@@ -293,8 +293,8 @@ namespace viylouuInc_Launcher
                                         { 
                                             if (matrix[dx + x, dy + y] == null) 
                                             { 
-                                                Cell c = cloneProps(cells[cellSel]); 
-                                                c.color = Color.Lerp(c.cols[0], c.cols[1], r.Next(0, 1000) / 1000f);
+                                                Cell c = cloneProps(cells[cellSel]);
+                                                c.color = Color.Lerp(c.cols[0], c.cols[1], (float)Math.Sin(time * 5) + (r.Next(-5, 5) / 5f));
 
                                                 matrix[dx + x, dy + y] = c; 
                                             }
@@ -307,7 +307,7 @@ namespace viylouuInc_Launcher
                                 if (matrix[dx, dy] == null) 
                                 { 
                                     Cell c = cloneProps(cells[cellSel]); 
-                                    c.color = Color.Lerp(c.cols[0], c.cols[1], r.Next(0, 1000) / 1000f);
+                                    c.color = Color.Lerp(c.cols[0], c.cols[1], (float)Math.Sin(time * 5) + (r.Next(-5, 5) / 5f));
                                     
                                     matrix[dx, dy] = c; 
                                 } 
@@ -397,7 +397,7 @@ namespace viylouuInc_Launcher
 
                     ImGui.Begin("Settings");
 
-                    ImGui.SliderInt("Pixel Size", ref pixSize, 1, 10);
+                    ImGui.SliderInt("Pixel Size", ref pixSize, 1, 16);
 
                     ImGui.Checkbox("Debug Mode", ref debugMode);
 
@@ -465,7 +465,7 @@ namespace viylouuInc_Launcher
         }
 
         public void FixUpd()
-        { processCells(); }
+        { processCells(); time += Time.DeltaTime; }
 
         public void processCells()
         {
