@@ -66,7 +66,6 @@ namespace viylouuInc_Launcher
 
                 canv.Clear(Color.Black);
 
-                for()
                 canv.DrawTexture(
                     ovwenv,
                     new Rectangle(
