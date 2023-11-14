@@ -69,6 +69,14 @@ partial class Program
         ver = "0.0 BETA"
     };
 
+    static gameInfo bask = new gameInfo
+    {
+        name = "Bask",
+        desc = "Bask is a 2.5d Racecar game using spritestacking",
+        updater = new BaskGame().Update,
+        ver = "0.0 BETA"
+    };
+
     static gameInfo[] games = null;
 
     public static bool gameStarted = false;
@@ -111,7 +119,8 @@ partial class Program
         games = new gameInfo[] {
             cells,
             lisk,
-            tink
+            tink,
+            bask
         };
     }
 
