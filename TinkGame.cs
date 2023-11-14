@@ -21,11 +21,12 @@ namespace viylouuInc_Launcher
 
         public bool men = false;
 
-        public int[,] ovwmap = new int[,] {
-            {0, 15, 15, 0},
-            {15, 15, 15, 15},
-            {15, 15, 15, 15},
-            {0, 15, 15, 0}
+        public Vector2[,] ovwmap = new Vector2[,] {
+            {Vector2.Zero, new Vector2(32, 16), new Vector2(32, 16), new Vector2(32, 16), Vector2.Zero},
+            {new Vector2(32, 16), new Vector2(32, 16), new Vector2(32, 16), new Vector2(32, 16), new Vector2(32, 16)},
+            {new Vector2(32, 16), new Vector2(32, 16), new Vector2(32, 16), new Vector2(32, 16), new Vector2(32, 16)},
+            {new Vector2(32, 16), new Vector2(32, 16), new Vector2(32, 16), new Vector2(32, 16), new Vector2(32, 16)},
+            {Vector2.Zero, new Vector2(32, 16), new Vector2(32, 16), new Vector2(32, 16), Vector2.Zero}
         };
 
         public void Update()
@@ -66,32 +67,37 @@ namespace viylouuInc_Launcher
 
                 canv.Clear(Color.Black);
 
-                for()
-                canv.DrawTexture(
-                    ovwenv,
-                    new Rectangle(
-                        new Vector2(
-                            160,
-                            0
-                        ),
-                        new Vector2(
-                            16,
-                            16
-                        ),
-                        Alignment.TopLeft
-                    ),
-                    new Rectangle(
-                        new Vector2(
-                            Window.Width / 2,
-                            Window.Height / 2
-                        ),
-                        new Vector2(
-                            16 * pixSize,
-                            16 * pixSize
-                        ),
-                        Alignment.Center
-                    )
-                );
+                for (int x = 0; x < ovwmap.GetLength(0); x++)
+                {
+                    for (int y = 0; y < ovwmap.GetLength(1); y++)
+                    {
+                        canv.DrawTexture(
+                            ovwenv,
+                            new Rectangle(
+                                new Vector2(
+                                    ovwmap[x, y].X,
+                                    ovwmap[x, y].Y
+                                ),
+                                new Vector2(
+                                    16,
+                                    16
+                                ),
+                                Alignment.TopLeft
+                            ),
+                            new Rectangle(
+                                new Vector2(
+                                    Window.Width / 2 + (x - (ovwmap.GetLength(0) / 2)) * 16 * pixSize,
+                                    Window.Height / 2 + (y - (ovwmap.GetLength(1) / 2)) * 16 * pixSize
+                                ),
+                                new Vector2(
+                                    16 * pixSize,
+                                    16 * pixSize
+                                ),
+                                Alignment.Center
+                            )
+                        );
+                    }
+                }
 
                 canv.DrawTexture(
                     rogueidle,
