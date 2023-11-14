@@ -1,4 +1,5 @@
-﻿using SimulationFramework.Drawing;
+﻿using SimulationFramework;
+using SimulationFramework.Drawing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ namespace viylouuInc_Launcher
         public void Update()
         {
             ICanvas canv = Graphics.GetOutputCanvas();
+
+            canv.Clear(Color.Black);
         }
     }
 }
