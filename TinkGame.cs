@@ -86,8 +86,8 @@ namespace viylouuInc_Launcher
                             ),
                             new Rectangle(
                                 new Vector2(
-                                    Window.Width / 2 + (x - (ovwmap.GetLength(0) / 2)) * 16 * pixSize,
-                                    Window.Height / 2 + (y - (ovwmap.GetLength(1) / 2)) * 16 * pixSize
+                                    canv.Width / 2 + (x - (ovwmap.GetLength(0) / 2)) * 16 * pixSize,
+                                    canv.Height / 2 + (y - (ovwmap.GetLength(1) / 2)) * 16 * pixSize
                                 ),
                                 new Vector2(
                                     16 * pixSize,
@@ -114,8 +114,8 @@ namespace viylouuInc_Launcher
                     ),
                     new Rectangle(
                         new Vector2(
-                            Window.Width / 2,
-                            Window.Height / 2
+                            canv.Width / 2,
+                            canv.Height / 2
                         ),
                         new Vector2(
                             32 * pixSize,
