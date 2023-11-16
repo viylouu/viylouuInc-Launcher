@@ -13,8 +13,9 @@ namespace viylouuInc_Launcher
 {
     internal class BaskGame
     {
-        ITexture gsc = null;
-        int gscl = 7;
+        ITexture[] cars = null;
+        int[] carLs = null;
+        float[] dirs = null;
 
         bool started = false;
 
@@ -22,14 +23,35 @@ namespace viylouuInc_Launcher
 
         bool men = false;
 
-        int dir = 45;
+
+        float delta = 0;
+
+        bool debug = false;
 
         public void Update()
         {
             if (!started)
             {
-                if (gsc != null) { gsc.Dispose(); }
-                gsc = Graphics.LoadTexture(@"Assets\Sprites\Bask Assets\GreenCar.png");
+                if (cars != null) { for (int i = 0; i < cars.Length; i++) { cars[i].Dispose(); } }
+
+                cars = new ITexture[] 
+                {
+                    Graphics.LoadTexture(@"Assets\Sprites\Bask Assets\BlueCar.png"),
+                    Graphics.LoadTexture(@"Assets\Sprites\Bask Assets\PurpleCar.png"),
+                    Graphics.LoadTexture(@"Assets\Sprites\Bask Assets\GreenCar.png"),
+                    Graphics.LoadTexture(@"Assets\Sprites\Bask Assets\GreenBigCar.png"),
+                    Graphics.LoadTexture(@"Assets\Sprites\Bask Assets\RedCar.png"),
+                    Graphics.LoadTexture(@"Assets\Sprites\Bask Assets\YellowCar.png"),
+                    Graphics.LoadTexture(@"Assets\Sprites\Bask Assets\BrownMotorcycle.png"),
+                    Graphics.LoadTexture(@"Assets\Sprites\Bask Assets\RedMotorcycle.png"),
+                    Graphics.LoadTexture(@"Assets\Sprites\Bask Assets\WhiteMotorcycle.png")
+                };
+
+                carLs = new int[]
+                { 9, 8, 7, 10, 8, 12, 10, 10, 10 };
+
+                dirs = new float[]
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
                 men = false;
 
@@ -41,28 +63,41 @@ namespace viylouuInc_Launcher
 
                 canv.Clear(Color.Black);
 
-                for (int i = 0; i < gscl; i++)
-                {
-                    //canv.Translate(canv.Width / 2, canv.Height / 2 - i * pixSize);
-                    //canv.Rotate(dir * (float.Pi / 180f));
+                //Simulation.SetFixedResolution(320, 180, Color.Black, false, false, true);
 
-                    canv.DrawTexture(
-                        gsc,
-                        new Rectangle(
-                            new Vector2(i * 16, 0),
-                            new Vector2(16, 16),
-                            Alignment.TopLeft
-                        ),
-                        new Rectangle(
-                            new Vector2(canv.Width / 2, canv.Height / 2 - i * pixSize),
-                            new Vector2(16 * pixSize, 16 * pixSize),
-                            Alignment.Center
-                        )
-                    );
+                for (int i2 = 0; i2 < cars.Length; i2++)
+                {
+                    for (int i = 0; i < carLs[i2]; i++)
+                    {
+                        canv.Translate(canv.Width / 2 + (i2 * 18 * pixSize - ((cars.Length - 1) * 18 * pixSize / 2)), canv.Height / 2 - i * pixSize);
+                        canv.Rotate((dirs[i2] - 90) * (float.Pi / 180f));
+
+                        canv.DrawTexture(
+                            cars[i2],
+                            new Rectangle(
+                                new Vector2(i * 16, 0),
+                                new Vector2(16, 16),
+                                Alignment.TopLeft
+                            ),
+                            new Rectangle(
+                                new Vector2(0, 0),
+                                new Vector2(16 * pixSize, 16 * pixSize),
+                                Alignment.Center
+                            )
+                        );
+
+                        canv.ResetState();
+                    }
+
+                    dirs[i2] = (float)Math.Atan((-Mouse.Position.Y / ((float)(canv.Width / 2 + (i2 * 18 * pixSize - ((cars.Length - 1) * 18 * pixSize / 2))) - Mouse.Position.X)) * (float.Pi / 180)) * (180 / float.Pi);
+                    dirs[i2] = dirs[i2] % 360;
                 }
 
                 if (Keyboard.IsKeyPressed(Key.Esc))
                 { men = !men; }
+
+                if (Keyboard.IsKeyPressed(Key.Tab))
+                { debug = !debug; }
 
                 if (men)
                 {
@@ -81,6 +116,20 @@ namespace viylouuInc_Launcher
 
                     ImGui.End();
                 }
+
+                if (debug)
+                {
+                    ImGui.Begin("Debug");
+
+                    for (int i = 0; i < cars.Length; i++)
+                    {
+                        ImGui.Text("Dir ( " + dirs[i] + " )");
+                    }
+
+                    ImGui.End();
+                }
+
+                delta = Time.DeltaTime * 60;
             }
         }
     }

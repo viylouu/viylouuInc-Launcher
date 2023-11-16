@@ -50,7 +50,7 @@ partial class Program
         name = "Cells",
         desc = "Cells is a simple cellulaur automata engine",
         updater = new CellsGame().Update,
-        ver = "0.1.1"
+        ver = "0.1.5"
     };
 
     static gameInfo lisk = new gameInfo
