@@ -19,14 +19,13 @@ namespace viylouuInc_Launcher
 
         bool started = false;
 
-        int pixSize = 3;
-
         bool men = false;
-
 
         float delta = 0;
 
         bool debug = false;
+
+        IFont font = null;
 
         public void Update()
         {
@@ -51,9 +50,23 @@ namespace viylouuInc_Launcher
                 { 9, 8, 7, 10, 8, 12, 10, 10, 10 };
 
                 dirs = new float[]
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                { 
+                    0, 
+                    360 / cars.Length, 
+                    360 / cars.Length * 2, 
+                    360 / cars.Length * 3, 
+                    360 / cars.Length * 4, 
+                    360 / cars.Length * 5, 
+                    360 / cars.Length * 6, 
+                    360 / cars.Length * 7, 
+                    360 / cars.Length * 8 
+                };
 
                 men = false;
+
+                font = Graphics.LoadFont(@"Assets\Fonts\MatchupPro.ttf");
+
+                Simulation.SetFixedResolution(320, 180, Color.Black, false, false, true);
 
                 started = true;
             }
@@ -63,13 +76,11 @@ namespace viylouuInc_Launcher
 
                 canv.Clear(Color.Black);
 
-                //Simulation.SetFixedResolution(320, 180, Color.Black, false, false, true);
-
                 for (int i2 = 0; i2 < cars.Length; i2++)
                 {
                     for (int i = 0; i < carLs[i2]; i++)
                     {
-                        canv.Translate(canv.Width / 2 + (i2 * 18 * pixSize - ((cars.Length - 1) * 18 * pixSize / 2)), canv.Height / 2 - i * pixSize);
+                        canv.Translate(canv.Width / 2 + (i2 * 18 - ((cars.Length - 1) * 18 / 2)), canv.Height / 2 - i);
                         canv.Rotate((dirs[i2] - 90) * (float.Pi / 180f));
 
                         canv.DrawTexture(
@@ -81,7 +92,7 @@ namespace viylouuInc_Launcher
                             ),
                             new Rectangle(
                                 new Vector2(0, 0),
-                                new Vector2(16 * pixSize, 16 * pixSize),
+                                new Vector2(16, 16),
                                 Alignment.Center
                             )
                         );
@@ -89,7 +100,7 @@ namespace viylouuInc_Launcher
                         canv.ResetState();
                     }
 
-                    dirs[i2] = (float)Math.Atan((-Mouse.Position.Y / ((float)(canv.Width / 2 + (i2 * 18 * pixSize - ((cars.Length - 1) * 18 * pixSize / 2))) - Mouse.Position.X)) * (float.Pi / 180)) * (180 / float.Pi);
+                    dirs[i2] += delta * 90;
                     dirs[i2] = dirs[i2] % 360;
                 }
 
@@ -98,6 +109,9 @@ namespace viylouuInc_Launcher
 
                 if (Keyboard.IsKeyPressed(Key.Tab))
                 { debug = !debug; }
+
+                canv.Font(font);
+                canv.DrawText("Cars: " + cars.Length, 1, 1, Alignment.TopLeft);
 
                 if (men)
                 {
@@ -129,7 +143,7 @@ namespace viylouuInc_Launcher
                     ImGui.End();
                 }
 
-                delta = Time.DeltaTime * 60;
+                delta = Time.DeltaTime;
             }
         }
     }

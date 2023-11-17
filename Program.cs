@@ -130,6 +130,8 @@ partial class Program
         {
             canv.Clear(BG);
 
+            Simulation.SetFixedResolution(1920, 1080, Color.Black, false, false, true);
+
             UpdSep((DateTime.UtcNow - lastItTime).TotalSeconds, Fix);
             lastItTime = DateTime.UtcNow;
 
@@ -202,7 +204,7 @@ partial class Program
 
             //gameinfo
             canv.Fill(TEXT);
-            canv.Font(smallTxt);
+            //canv.Font(smallTxt);
             canv.FontSize(50);
             canv.DrawText(games[gameSelected].name, new Vector2(canv.Width / 2, 175), Alignment.Center);
 
@@ -239,7 +241,7 @@ partial class Program
             DrawModernBox(canv, new Vector2(100, setMenuY + 160), new Vector2(50, 50), 45, PRIMARY);
 
             canv.Fill(TEXT);
-            canv.Font(smallTxt);
+            //canv.Font(smallTxt);
             canv.FontSize(35);
             canv.DrawText("+", new Vector2(40, setMenuY + 160), Alignment.Center);
 
@@ -251,7 +253,7 @@ partial class Program
             DrawModernBox(canv, new Vector2(40, setMenuY + 220), new Vector2(50, 50), 45, PRIMARY);
 
             canv.Fill(TEXT);
-            canv.Font(smallTxt);
+            //canv.Font(smallTxt);
             canv.FontSize(35);
             canv.DrawText(fullScreen ? "*" : "-", new Vector2(40, setMenuY + 220), Alignment.Center);
 
@@ -261,7 +263,7 @@ partial class Program
             DrawModernBox(canv, new Vector2(40, setMenuY + 280), new Vector2(50, 50), 45, PRIMARY);
 
             canv.Fill(TEXT);
-            canv.Font(smallTxt);
+            //canv.Font(smallTxt);
             canv.FontSize(35);
             canv.DrawText(vsync ? "*" : "-", new Vector2(40, setMenuY + 280), Alignment.Center);
 
@@ -343,7 +345,7 @@ partial class Program
             canv.DrawRect(new Vector2(0, 120 + infoMenuY), new Vector2(canv.Width, canv.Height), Alignment.TopLeft);
 
             canv.Fill(TEXT);
-            canv.Font(smallTxt);
+            //canv.Font(smallTxt);
             canv.FontSize(35);
             canv.DrawText("This launcher is a game launcher made by viylouu in 2023.", new Vector2(20, infoMenuY + 160), Alignment.CenterLeft);
             canv.DrawText("It includes multiple games hand coded by viylouu himself.", new Vector2(20, infoMenuY + 200), Alignment.CenterLeft);
