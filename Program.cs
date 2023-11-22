@@ -142,10 +142,11 @@ partial class Program
             canv.Fill(new Color(0, 0, 0, 100));
             canv.DrawRect(Vector2.Zero, new Vector2(canv.Width, 120));
 
-            DrawModernBox(canv, new Vector2(Window.Width / 2 - 140, 60), new Vector2(80, 80), 45, PRIMARY);
-            DrawModernBox(canv, new Vector2(Window.Width / 2 - 50, 60), new Vector2(80, 80), 45, PRIMARY);
-            DrawModernBox(canv, new Vector2(Window.Width / 2 + 50, 60), new Vector2(80, 80), 45, PRIMARY);
-            DrawModernBox(canv, new Vector2(Window.Width / 2 + 140, 60), new Vector2(80, 80), 45, PRIMARY);
+            canv.Fill(PRIMARY);
+            canv.DrawRoundedRect(new Vector2(Window.Width / 2 - 140, 60), new Vector2(80, 80), 45, Alignment.Center);
+            canv.DrawRoundedRect(new Vector2(Window.Width / 2 - 50, 60), new Vector2(80, 80), 45, Alignment.Center);
+            canv.DrawRoundedRect(new Vector2(Window.Width / 2 + 50, 60), new Vector2(80, 80), 45, Alignment.Center);
+            canv.DrawRoundedRect(new Vector2(Window.Width / 2 + 140, 60), new Vector2(80, 80), 45, Alignment.Center);
 
             canv.DrawTexture(settingsIcon, new Vector2(canv.Width / 2 - 140, 60), new Vector2(60, 60), Alignment.Center);
 
@@ -212,7 +213,8 @@ partial class Program
 
             canv.DrawText("Version: " + games[gameSelected].ver, new Vector2(canv.Width / 2, 300), Alignment.Center);
 
-            DrawModernBox(canv, new Vector2(Window.Width / 2, Window.Height / 2 + 80), new Vector2(500, 150), 45, PRIMARY);
+            canv.Fill(PRIMARY);
+            canv.DrawRoundedRect(new Vector2(Window.Width / 2, Window.Height / 2 + 80), new Vector2(500, 150), 45, Alignment.Center);
 
             canv.Fill(TEXT);
             canv.FontSize(75);

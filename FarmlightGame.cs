@@ -20,7 +20,7 @@ namespace viylouuInc_Launcher
         {
             if (!started)
             {
-                //Simulation.SetFixedResolution(320, 180, Color.Black, false, false, true);
+                Simulation.SetFixedResolution(320, 180, Color.Black, false, false, true);
 
                 started = true;
             }
