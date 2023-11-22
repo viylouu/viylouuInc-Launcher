@@ -50,7 +50,7 @@ partial class Program
         name = "Cells",
         desc = "Cells is a simple cellulaur automata engine",
         updater = new CellsGame().Update,
-        ver = "0.1.1"
+        ver = "0.1.5"
     };
 
     static gameInfo lisk = new gameInfo
@@ -119,8 +119,7 @@ partial class Program
         games = new gameInfo[] {
             cells,
             lisk,
-            tink,
-            farmlight
+            tink
         };
     }
 
@@ -130,33 +129,34 @@ partial class Program
         {
             canv.Clear(BG);
 
+            Simulation.SetFixedResolution(1920, 1080, Color.Black, false, false, true);
+
             UpdSep((DateTime.UtcNow - lastItTime).TotalSeconds, Fix);
             lastItTime = DateTime.UtcNow;
 
-            Gradient g = new LinearGradient(0, 0, Window.Width, Window.Height, new Color[] { BG, SECONDARY });
+            Gradient g = new LinearGradient(0, 0, canv.Width, canv.Height, new Color[] { BG, SECONDARY });
 
             canv.Fill(g);
-            canv.DrawRect(Vector2.Zero, new Vector2(Window.Width, Window.Height));
+            canv.DrawRect(Vector2.Zero, new Vector2(canv.Width, canv.Height));
 
             canv.Fill(new Color(0, 0, 0, 100));
-            canv.DrawRect(Vector2.Zero, new Vector2(Window.Width, 120));
+            canv.DrawRect(Vector2.Zero, new Vector2(canv.Width, 120));
 
-            canv.Fill(PRIMARY);
-            canv.DrawRoundedRect(new Vector2(Window.Width / 2 - 140, 60), new Vector2(80, 80), 45, Alignment.Center);
-            canv.DrawRoundedRect(new Vector2(Window.Width / 2 - 50, 60), new Vector2(80, 80), 45, Alignment.Center);
-            canv.DrawRoundedRect(new Vector2(Window.Width / 2 + 50, 60), new Vector2(80, 80), 45, Alignment.Center);
-            canv.DrawRoundedRect(new Vector2(Window.Width / 2 + 140, 60), new Vector2(80, 80), 45, Alignment.Center);
+            DrawModernBox(canv, new Vector2(Window.Width / 2 - 140, 60), new Vector2(80, 80), 45, PRIMARY);
+            DrawModernBox(canv, new Vector2(Window.Width / 2 - 50, 60), new Vector2(80, 80), 45, PRIMARY);
+            DrawModernBox(canv, new Vector2(Window.Width / 2 + 50, 60), new Vector2(80, 80), 45, PRIMARY);
+            DrawModernBox(canv, new Vector2(Window.Width / 2 + 140, 60), new Vector2(80, 80), 45, PRIMARY);
 
-            canv.DrawTexture(settingsIcon, new Vector2(Window.Width / 2 - 140, 60), new Vector2(60, 60), Alignment.Center);
+            canv.DrawTexture(settingsIcon, new Vector2(canv.Width / 2 - 140, 60), new Vector2(60, 60), Alignment.Center);
 
-            canv.DrawTexture(homeIcon, new Vector2(Window.Width / 2 - 50, 60), new Vector2(60, 60), Alignment.Center);
+            canv.DrawTexture(homeIcon, new Vector2(canv.Width / 2 - 50, 60), new Vector2(60, 60), Alignment.Center);
 
-            canv.DrawTexture(infoIcon, new Vector2(Window.Width / 2 + 50, 60), new Vector2(60, 60), Alignment.Center);
+            canv.DrawTexture(infoIcon, new Vector2(canv.Width / 2 + 50, 60), new Vector2(60, 60), Alignment.Center);
 
-            canv.DrawTexture(closeIcon, new Vector2(Window.Width / 2 + 140, 60), new Vector2(60, 60), Alignment.Center);
+            canv.DrawTexture(closeIcon, new Vector2(canv.Width / 2 + 140, 60), new Vector2(60, 60), Alignment.Center);
 
             //opens settings
-            if (rectPoint(new Vector2(Window.Width / 2 - 140, 60), new Vector2(80, 80), Mouse.Position))
+            if (rectPoint(new Vector2(canv.Width / 2 - 140, 60), new Vector2(80, 80), Mouse.Position))
             {
                 if (Mouse.IsButtonPressed(MouseButton.Left))
                 {
@@ -170,7 +170,7 @@ partial class Program
                 }
             }
             //opens home area again
-            else if (rectPoint(new Vector2(Window.Width / 2 - 50, 60), new Vector2(80, 80), Mouse.Position))
+            else if (rectPoint(new Vector2(canv.Width / 2 - 50, 60), new Vector2(80, 80), Mouse.Position))
             {
                 if (Mouse.IsButtonPressed(MouseButton.Left))
                 {
@@ -184,10 +184,10 @@ partial class Program
                 }
             }
             //closes everything
-            else if (rectPoint(new Vector2(Window.Width / 2 + 140, 60), new Vector2(80, 80), Mouse.Position))
+            else if (rectPoint(new Vector2(canv.Width / 2 + 140, 60), new Vector2(80, 80), Mouse.Position))
             { if (Mouse.IsButtonPressed(MouseButton.Left)) { Environment.Exit(0); } }
             //info menu
-            else if (rectPoint(new Vector2(Window.Width / 2 + 50, 60), new Vector2(80, 80), Mouse.Position))
+            else if (rectPoint(new Vector2(canv.Width / 2 + 50, 60), new Vector2(80, 80), Mouse.Position))
             {
                 if (Mouse.IsButtonPressed(MouseButton.Left))
                 {
@@ -203,23 +203,22 @@ partial class Program
 
             //gameinfo
             canv.Fill(TEXT);
-            canv.Font(smallTxt);
+            //canv.Font(smallTxt);
             canv.FontSize(50);
-            canv.DrawText(games[gameSelected].name, new Vector2(Window.Width / 2, 175), Alignment.Center);
+            canv.DrawText(games[gameSelected].name, new Vector2(canv.Width / 2, 175), Alignment.Center);
 
             canv.FontSize(25);
-            canv.DrawText(games[gameSelected].desc, new Vector2(Window.Width / 2, 250), Alignment.Center);
+            canv.DrawText(games[gameSelected].desc, new Vector2(canv.Width / 2, 250), Alignment.Center);
 
-            canv.DrawText("Version: " + games[gameSelected].ver, new Vector2(Window.Width / 2, 300), Alignment.Center);
+            canv.DrawText("Version: " + games[gameSelected].ver, new Vector2(canv.Width / 2, 300), Alignment.Center);
 
-            canv.Fill(PRIMARY);
-            canv.DrawRoundedRect(new Vector2(Window.Width / 2, Window.Height / 2 + 80), new Vector2(500, 150), 45, Alignment.Center);
+            DrawModernBox(canv, new Vector2(Window.Width / 2, Window.Height / 2 + 80), new Vector2(500, 150), 45, PRIMARY);
 
             canv.Fill(TEXT);
             canv.FontSize(75);
-            canv.DrawText("Start", new Vector2(Window.Width / 2, Window.Height / 2 + 80), Alignment.Center);
+            canv.DrawText("Start", new Vector2(canv.Width / 2, canv.Height / 2 + 80), Alignment.Center);
 
-            if (rectPoint(new Vector2(Window.Width / 2, Window.Height / 2 + 80), new Vector2(500, 150), Mouse.Position) && !settingsOpen && !infoOpen)
+            if (rectPoint(new Vector2(canv.Width / 2, canv.Height / 2 + 80), new Vector2(500, 150), Mouse.Position) && !settingsOpen && !infoOpen)
             {
                 if (Mouse.IsButtonPressed(MouseButton.Left))
                 {
@@ -235,14 +234,14 @@ partial class Program
             //settings menu
 
             canv.Fill(SECONDARY);
-            canv.DrawRect(new Vector2(0, 120 + setMenuY), new Vector2(Window.Width, Window.Height), Alignment.TopLeft);
+            canv.DrawRect(new Vector2(0, 120 + setMenuY), new Vector2(canv.Width, canv.Height), Alignment.TopLeft);
 
             canv.Fill(PRIMARY);
             canv.DrawRoundedRect(new Vector2(40, setMenuY + 160), new Vector2(50, 50), 45, Alignment.Center);
             canv.DrawRoundedRect(new Vector2(100, setMenuY + 160), new Vector2(50, 50), 45, Alignment.Center);
 
             canv.Fill(TEXT);
-            canv.Font(smallTxt);
+            //canv.Font(smallTxt);
             canv.FontSize(35);
             canv.DrawText("+", new Vector2(40, setMenuY + 160), Alignment.Center);
 
@@ -255,7 +254,7 @@ partial class Program
             canv.DrawRoundedRect(new Vector2(40, setMenuY + 220), new Vector2(50, 50), 45, Alignment.Center);
 
             canv.Fill(TEXT);
-            canv.Font(smallTxt);
+            //canv.Font(smallTxt);
             canv.FontSize(35);
             canv.DrawText(fullScreen ? "*" : "-", new Vector2(40, setMenuY + 220), Alignment.Center);
 
@@ -266,7 +265,7 @@ partial class Program
             canv.DrawRoundedRect(new Vector2(40, setMenuY + 280), new Vector2(50, 50), 45, Alignment.Center);
 
             canv.Fill(TEXT);
-            canv.Font(smallTxt);
+            //canv.Font(smallTxt);
             canv.FontSize(35);
             canv.DrawText(vsync ? "*" : "-", new Vector2(40, setMenuY + 280), Alignment.Center);
 
@@ -345,10 +344,10 @@ partial class Program
             //info menu
 
             canv.Fill(SECONDARY);
-            canv.DrawRect(new Vector2(0, 120 + infoMenuY), new Vector2(Window.Width, Window.Height), Alignment.TopLeft);
+            canv.DrawRect(new Vector2(0, 120 + infoMenuY), new Vector2(canv.Width, canv.Height), Alignment.TopLeft);
 
             canv.Fill(TEXT);
-            canv.Font(smallTxt);
+            //canv.Font(smallTxt);
             canv.FontSize(35);
             canv.DrawText("This launcher is a game launcher made by viylouu in 2023.", new Vector2(20, infoMenuY + 160), Alignment.CenterLeft);
             canv.DrawText("It includes multiple games hand coded by viylouu himself.", new Vector2(20, infoMenuY + 200), Alignment.CenterLeft);
@@ -411,13 +410,15 @@ partial class Program
 
     static void Fix()
     {
+        ICanvas canv = Graphics.GetOutputCanvas();
+
         if (settingsOpen)
         {
             setMenuY += -setMenuY / 5;
         }
         else
         {
-            setMenuY += (Window.Height - setMenuY) / 5;
+            setMenuY += (canv.Height - setMenuY) / 5;
         }
 
         if (infoOpen)
@@ -426,7 +427,7 @@ partial class Program
         }
         else
         {
-            infoMenuY += (Window.Height - infoMenuY) / 5;
+            infoMenuY += (canv.Height - infoMenuY) / 5;
         }
     }
 

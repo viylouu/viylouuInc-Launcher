@@ -71,7 +71,7 @@ namespace viylouuInc_Launcher
                         for (int y = 0; y < 100; y++)
                         {
                             canv.Fill(Color.Gray);
-                            canv.DrawRect(new Vector2((x*10*4 + editCam.X) * editZoom, (Window.Height - y*10* 4 + editCam.Y) * editZoom), new Vector2(10 * editZoom, 10 * editZoom), Alignment.Center);
+                            canv.DrawRect(new Vector2((x*10*4 + editCam.X) * editZoom, (canv.Height - y*10* 4 + editCam.Y) * editZoom), new Vector2(10 * editZoom, 10 * editZoom), Alignment.Center);
                         }
                     }
 
@@ -82,15 +82,15 @@ namespace viylouuInc_Launcher
                     { editZoom += Mouse.ScrollWheelDelta / 50; }
                 }
 
-                canv.DrawTexture(toronoiTest, new Vector2(Window.Width / 2, Window.Height / 2), new Vector2(Window.Height / 3, Window.Height / 3), Alignment.Center);
-                canv.DrawTexture(toronoiTest, new Vector2(Window.Width / 2, Window.Height / 2 + Window.Height / 3), new Vector2(Window.Height / 3, Window.Height / 3), Alignment.Center);
-                canv.DrawTexture(toronoiTest, new Vector2(Window.Width / 2, Window.Height / 2 - Window.Height / 3), new Vector2(Window.Height / 3, Window.Height / 3), Alignment.Center);
-                canv.DrawTexture(toronoiTest, new Vector2(Window.Width / 2 - Window.Height / 3, Window.Height / 2), new Vector2(Window.Height / 3, Window.Height / 3), Alignment.Center);
-                canv.DrawTexture(toronoiTest, new Vector2(Window.Width / 2 - Window.Height / 3, Window.Height / 2 + Window.Height / 3), new Vector2(Window.Height / 3, Window.Height / 3), Alignment.Center);
-                canv.DrawTexture(toronoiTest, new Vector2(Window.Width / 2 - Window.Height / 3, Window.Height / 2 - Window.Height / 3), new Vector2(Window.Height / 3, Window.Height / 3), Alignment.Center);
-                canv.DrawTexture(toronoiTest, new Vector2(Window.Width / 2 + Window.Height / 3, Window.Height / 2), new Vector2(Window.Height / 3, Window.Height / 3), Alignment.Center);
-                canv.DrawTexture(toronoiTest, new Vector2(Window.Width / 2 + Window.Height / 3, Window.Height / 2 + Window.Height / 3), new Vector2(Window.Height / 3, Window.Height / 3), Alignment.Center);
-                canv.DrawTexture(toronoiTest, new Vector2(Window.Width / 2 + Window.Height / 3, Window.Height / 2 - Window.Height / 3), new Vector2(Window.Height / 3, Window.Height / 3), Alignment.Center);
+                canv.DrawTexture(toronoiTest, new Vector2(canv.Width / 2, canv.Height / 2), new Vector2(canv.Height / 3, canv.Height / 3), Alignment.Center);
+                canv.DrawTexture(toronoiTest, new Vector2(canv.Width / 2, canv.Height / 2 + canv.Height / 3), new Vector2(canv.Height / 3, canv.Height / 3), Alignment.Center);
+                canv.DrawTexture(toronoiTest, new Vector2(canv.Width / 2, canv.Height / 2 - canv.Height / 3), new Vector2(canv.Height / 3, canv.Height / 3), Alignment.Center);
+                canv.DrawTexture(toronoiTest, new Vector2(canv.Width / 2 - canv.Height / 3, canv.Height / 2), new Vector2(canv.Height / 3, canv.Height / 3), Alignment.Center);
+                canv.DrawTexture(toronoiTest, new Vector2(canv.Width / 2 - canv.Height / 3, canv.Height / 2 + canv.Height / 3), new Vector2(canv.Height / 3, canv.Height / 3), Alignment.Center);
+                canv.DrawTexture(toronoiTest, new Vector2(canv.Width / 2 - canv.Height / 3, canv.Height / 2 - canv.Height / 3), new Vector2(canv.Height / 3, canv.Height / 3), Alignment.Center);
+                canv.DrawTexture(toronoiTest, new Vector2(canv.Width / 2 + canv.Height / 3, canv.Height / 2), new Vector2(canv.Height / 3, canv.Height / 3), Alignment.Center);
+                canv.DrawTexture(toronoiTest, new Vector2(canv.Width / 2 + canv.Height / 3, canv.Height / 2 + canv.Height / 3), new Vector2(canv.Height / 3, canv.Height / 3), Alignment.Center);
+                canv.DrawTexture(toronoiTest, new Vector2(canv.Width / 2 + canv.Height / 3, canv.Height / 2 - canv.Height / 3), new Vector2(canv.Height / 3, canv.Height / 3), Alignment.Center);
 
                 lmp = Mouse.Position;
             }

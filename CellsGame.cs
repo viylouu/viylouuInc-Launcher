@@ -141,8 +141,10 @@ namespace viylouuInc_Launcher
             {
                 set = false;
 
-                mSX = (int)Math.Round((double)Window.Width / pixSize);
-                mSY = (int)Math.Round((double)Window.Height / pixSize);
+                ICanvas canv = Graphics.GetOutputCanvas();
+
+                mSX = (int)Math.Round((double)canv.Width / pixSize);
+                mSY = (int)Math.Round((double)canv.Height / pixSize);
 
                 updMatrix = new bool[mSX, mSY];
                 matrix = new Cell[mSX, mSY];
@@ -180,14 +182,14 @@ namespace viylouuInc_Launcher
                 if (Mouse.IsButtonReleased(MouseButton.Left) && started)
                 { started = false; }
 
-                if (pixSize == stPixSize? (mSX != (int)Math.Round((double)Window.Width / pixSize) || mSY != (int)Math.Round((double)Window.Height / pixSize)) : true)
+                if (pixSize == stPixSize? (mSX != (int)Math.Round((double)canv.Width / pixSize) || mSY != (int)Math.Round((double)canv.Height / pixSize)) : true)
                 {
                     if (stPixSize != pixSize)
                     {
                         stPixSize = pixSize;
 
-                        mSX = (int)Math.Round((double)Window.Width / pixSize);
-                        mSY = (int)Math.Round((double)Window.Height / pixSize);
+                        mSX = (int)Math.Round((double)canv.Width / pixSize);
+                        mSY = (int)Math.Round((double)canv.Height / pixSize);
 
                         matrix = new Cell[mSX, mSY];
                         updMatrix = new bool[mSX, mSY];
@@ -205,8 +207,8 @@ namespace viylouuInc_Launcher
                         int oldGridSY = mSY;
                         Cell[,] oldGrid = matrix;
 
-                        mSX = (int)Math.Round((double)Window.Width / pixSize);
-                        mSY = (int)Math.Round((double)Window.Height / pixSize);
+                        mSX = (int)Math.Round((double)canv.Width / pixSize);
+                        mSY = (int)Math.Round((double)canv.Height / pixSize);
 
                         matrix = new Cell[mSX, mSY];
                         updMatrix = new bool[mSX, mSY];
@@ -234,7 +236,7 @@ namespace viylouuInc_Launcher
                 if (Mouse.IsButtonDown(MouseButton.Left) && !started)
                 {
                     int dx = (int)Math.Round(drawPos.X / pixSize);
-                    int dy = (int)Math.Round((Window.Height - drawPos.Y) / pixSize);
+                    int dy = (int)Math.Round((canv.Height - drawPos.Y) / pixSize);
 
                     if (
                         dx >= 0 &&
@@ -366,7 +368,7 @@ namespace viylouuInc_Launcher
 
                 canv.Fill(Color.White);
                 canv.DrawText(Math.Round(1 / Time.DeltaTime) + " FPS", new Vector2(5, 5), Alignment.TopLeft);
-                canv.DrawText(cellSel < cells.Length ? cells[cellSel].name : "null error", new Vector2(Window.Width - 5, 5), Alignment.TopRight);
+                canv.DrawText(cellSel < cells.Length ? cells[cellSel].name : "null error", new Vector2(canv.Width - 5, 5), Alignment.TopRight);
 
                 if (debugMode && debugDrawRad)
                 {
@@ -427,8 +429,8 @@ namespace viylouuInc_Launcher
 
                     if (ImGui.Button("Clear"))
                     {
-                        mSX = (int)Math.Round((double)Window.Width / pixSize);
-                        mSY = (int)Math.Round((double)Window.Height / pixSize);
+                        mSX = (int)Math.Round((double)canv.Width / pixSize);
+                        mSY = (int)Math.Round((double)canv.Height / pixSize);
 
                         matrix = new Cell[mSX, mSY];
                         updMatrix = new bool[mSX, mSY];
