@@ -69,6 +69,14 @@ partial class Program
         ver = "0.0 BETA"
     };
 
+    static gameInfo farmlight = new gameInfo
+    {
+        name = "Farmlight",
+        desc = "Farmlight is a chill 2d farming platformer game originally made in unity",
+        updater = new FarmlightGame().Update,
+        ver = "0.0 BETA"
+    };
+
     static gameInfo[] games = null;
 
     public static bool gameStarted = false;
@@ -111,7 +119,8 @@ partial class Program
         games = new gameInfo[] {
             cells,
             lisk,
-            tink
+            tink,
+            farmlight
         };
     }
 
@@ -132,10 +141,11 @@ partial class Program
             canv.Fill(new Color(0, 0, 0, 100));
             canv.DrawRect(Vector2.Zero, new Vector2(Window.Width, 120));
 
-            DrawModernBox(canv, new Vector2(Window.Width / 2 - 140, 60), new Vector2(80, 80), 45, PRIMARY);
-            DrawModernBox(canv, new Vector2(Window.Width / 2 - 50, 60), new Vector2(80, 80), 45, PRIMARY);
-            DrawModernBox(canv, new Vector2(Window.Width / 2 + 50, 60), new Vector2(80, 80), 45, PRIMARY);
-            DrawModernBox(canv, new Vector2(Window.Width / 2 + 140, 60), new Vector2(80, 80), 45, PRIMARY);
+            canv.Fill(PRIMARY);
+            canv.DrawRoundedRect(new Vector2(Window.Width / 2 - 140, 60), new Vector2(80, 80), 45, Alignment.Center);
+            canv.DrawRoundedRect(new Vector2(Window.Width / 2 - 50, 60), new Vector2(80, 80), 45, Alignment.Center);
+            canv.DrawRoundedRect(new Vector2(Window.Width / 2 + 50, 60), new Vector2(80, 80), 45, Alignment.Center);
+            canv.DrawRoundedRect(new Vector2(Window.Width / 2 + 140, 60), new Vector2(80, 80), 45, Alignment.Center);
 
             canv.DrawTexture(settingsIcon, new Vector2(Window.Width / 2 - 140, 60), new Vector2(60, 60), Alignment.Center);
 
@@ -202,7 +212,8 @@ partial class Program
 
             canv.DrawText("Version: " + games[gameSelected].ver, new Vector2(Window.Width / 2, 300), Alignment.Center);
 
-            DrawModernBox(canv, new Vector2(Window.Width / 2, Window.Height / 2 + 80), new Vector2(500, 150), 45, PRIMARY);
+            canv.Fill(PRIMARY);
+            canv.DrawRoundedRect(new Vector2(Window.Width / 2, Window.Height / 2 + 80), new Vector2(500, 150), 45, Alignment.Center);
 
             canv.Fill(TEXT);
             canv.FontSize(75);
@@ -226,8 +237,9 @@ partial class Program
             canv.Fill(SECONDARY);
             canv.DrawRect(new Vector2(0, 120 + setMenuY), new Vector2(Window.Width, Window.Height), Alignment.TopLeft);
 
-            DrawModernBox(canv, new Vector2(40, setMenuY + 160), new Vector2(50, 50), 45, PRIMARY);
-            DrawModernBox(canv, new Vector2(100, setMenuY + 160), new Vector2(50, 50), 45, PRIMARY);
+            canv.Fill(PRIMARY);
+            canv.DrawRoundedRect(new Vector2(40, setMenuY + 160), new Vector2(50, 50), 45, Alignment.Center);
+            canv.DrawRoundedRect(new Vector2(100, setMenuY + 160), new Vector2(50, 50), 45, Alignment.Center);
 
             canv.Fill(TEXT);
             canv.Font(smallTxt);
@@ -239,7 +251,8 @@ partial class Program
             canv.FontSize(15);
             canv.DrawText("Pallate: " + pallateName, new Vector2(140, setMenuY + 160), Alignment.CenterLeft);
 
-            DrawModernBox(canv, new Vector2(40, setMenuY + 220), new Vector2(50, 50), 45, PRIMARY);
+            canv.Fill(PRIMARY);
+            canv.DrawRoundedRect(new Vector2(40, setMenuY + 220), new Vector2(50, 50), 45, Alignment.Center);
 
             canv.Fill(TEXT);
             canv.Font(smallTxt);
@@ -249,7 +262,8 @@ partial class Program
             canv.FontSize(15);
             canv.DrawText("Fullscreen", new Vector2(80, setMenuY + 220), Alignment.CenterLeft);
 
-            DrawModernBox(canv, new Vector2(40, setMenuY + 280), new Vector2(50, 50), 45, PRIMARY);
+            canv.Fill(PRIMARY);
+            canv.DrawRoundedRect(new Vector2(40, setMenuY + 280), new Vector2(50, 50), 45, Alignment.Center);
 
             canv.Fill(TEXT);
             canv.Font(smallTxt);
@@ -414,19 +428,6 @@ partial class Program
         {
             infoMenuY += (Window.Height - infoMenuY) / 5;
         }
-    }
-
-    static void DrawModernBox(ICanvas canv, Vector2 pos, Vector2 scale, int roundness, Color col)
-    {
-        canv.Fill(col);
-
-        canv.DrawRect(pos, scale - new Vector2(0, roundness), Alignment.Center);
-        canv.DrawRect(pos, scale - new Vector2(roundness, 0), Alignment.Center);
-
-        canv.DrawEllipse(pos + new Vector2(scale.X / 2 - roundness / 2, scale.Y / 2 - roundness / 2), new Vector2(roundness / 2, roundness / 2), Alignment.Center);
-        canv.DrawEllipse(pos + new Vector2(-scale.X / 2 + roundness / 2, scale.Y / 2 - roundness / 2), new Vector2(roundness / 2, roundness / 2), Alignment.Center);
-        canv.DrawEllipse(pos + new Vector2(scale.X / 2 - roundness / 2, -scale.Y / 2 + roundness / 2), new Vector2(roundness / 2, roundness / 2), Alignment.Center);
-        canv.DrawEllipse(pos + new Vector2(-scale.X / 2 + roundness / 2, -scale.Y / 2 + roundness / 2), new Vector2(roundness / 2, roundness / 2), Alignment.Center);
     }
 
     static bool rectPoint(Vector2 rp, Vector2 rs, Vector2 p)
