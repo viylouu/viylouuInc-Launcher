@@ -6,6 +6,7 @@ using NAudio.Wave;
 using SimulationFramework.Input;
 using SimulationFramework.Components;
 using SimulationFramework.Desktop;
+using System.ComponentModel;
 
 Simulation sim = Simulation.Create(Init, Rend);
 sim.Run(new DesktopPlatform());
@@ -69,11 +70,27 @@ partial class Program
         ver = "0.0 BETA"
     };
 
+    static gameInfo bask = new gameInfo
+    {
+        name = "Bask",
+        desc = "Bask is a 2d topdown racing game using Spritestacking",
+        updater = new BaskGame().Update,
+        ver = "0.0 BETA"
+    };
+
     static gameInfo farmlight = new gameInfo
     {
         name = "Farmlight",
         desc = "Farmlight is a chill 2d farming platformer game originally made in unity",
         updater = new FarmlightGame().Update,
+        ver = "0.0 BETA"
+    };
+
+    static gameInfo linki = new gameInfo
+    {
+        name = "Linki",
+        desc = "Linki is a 3d rendering test",
+        updater = new LinkiGame().Update,
         ver = "0.0 BETA"
     };
 
@@ -119,7 +136,10 @@ partial class Program
         games = new gameInfo[] {
             cells,
             lisk,
-            tink
+            tink,
+            bask,
+            farmlight,
+            linki
         };
     }
 
@@ -143,10 +163,10 @@ partial class Program
             canv.DrawRect(Vector2.Zero, new Vector2(canv.Width, 120));
 
             canv.Fill(PRIMARY);
-            canv.DrawRoundedRect(new Vector2(Window.Width / 2 - 140, 60), new Vector2(80, 80), 45, Alignment.Center);
-            canv.DrawRoundedRect(new Vector2(Window.Width / 2 - 50, 60), new Vector2(80, 80), 45, Alignment.Center);
-            canv.DrawRoundedRect(new Vector2(Window.Width / 2 + 50, 60), new Vector2(80, 80), 45, Alignment.Center);
-            canv.DrawRoundedRect(new Vector2(Window.Width / 2 + 140, 60), new Vector2(80, 80), 45, Alignment.Center);
+            canv.DrawRoundedRect(new Vector2(canv.Width / 2 - 140, 60), new Vector2(80, 80), 45, Alignment.Center);
+            canv.DrawRoundedRect(new Vector2(canv.Width / 2 - 50, 60), new Vector2(80, 80), 45, Alignment.Center);
+            canv.DrawRoundedRect(new Vector2(canv.Width / 2 + 50, 60), new Vector2(80, 80), 45, Alignment.Center);
+            canv.DrawRoundedRect(new Vector2(canv.Width / 2 + 140, 60), new Vector2(80, 80), 45, Alignment.Center);
 
             canv.DrawTexture(settingsIcon, new Vector2(canv.Width / 2 - 140, 60), new Vector2(60, 60), Alignment.Center);
 
@@ -214,7 +234,7 @@ partial class Program
             canv.DrawText("Version: " + games[gameSelected].ver, new Vector2(canv.Width / 2, 300), Alignment.Center);
 
             canv.Fill(PRIMARY);
-            canv.DrawRoundedRect(new Vector2(Window.Width / 2, Window.Height / 2 + 80), new Vector2(500, 150), 45, Alignment.Center);
+            canv.DrawRoundedRect(new Vector2(canv.Width / 2, canv.Height / 2 + 80), new Vector2(500, 150), 45, Alignment.Center);
 
             canv.Fill(TEXT);
             canv.FontSize(75);
