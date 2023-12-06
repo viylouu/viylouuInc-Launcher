@@ -6,6 +6,7 @@ using NAudio.Wave;
 using SimulationFramework.Input;
 using SimulationFramework.Components;
 using SimulationFramework.Desktop;
+using System.ComponentModel;
 
 Simulation sim = Simulation.Create(Init, Rend);
 sim.Run(new DesktopPlatform());
@@ -72,7 +73,7 @@ partial class Program
     static gameInfo bask = new gameInfo
     {
         name = "Bask",
-        desc = "Bask is a 2.5d Racecar game using spritestacking",
+        desc = "Bask is a 2d topdown racing game using Spritestacking",
         updater = new BaskGame().Update,
         ver = "0.0 BETA"
     };
@@ -136,9 +137,7 @@ partial class Program
             cells,
             lisk,
             tink,
-            bask,
-            life,
-            veloc
+            bask
         };
     }
 
@@ -161,10 +160,11 @@ partial class Program
             canv.Fill(new Color(0, 0, 0, 100));
             canv.DrawRect(Vector2.Zero, new Vector2(canv.Width, 120));
 
-            DrawModernBox(canv, new Vector2(canv.Width / 2 - 140, 60), new Vector2(80, 80), 45, PRIMARY);
-            DrawModernBox(canv, new Vector2(canv.Width / 2 - 50, 60), new Vector2(80, 80), 45, PRIMARY);
-            DrawModernBox(canv, new Vector2(canv.Width / 2 + 50, 60), new Vector2(80, 80), 45, PRIMARY);
-            DrawModernBox(canv, new Vector2(canv.Width / 2 + 140, 60), new Vector2(80, 80), 45, PRIMARY);
+            canv.Fill(PRIMARY);
+            canv.DrawRoundedRect(new Vector2(canv.Width / 2 - 140, 60), new Vector2(80, 80), 45, Alignment.Center);
+            canv.DrawRoundedRect(new Vector2(canv.Width / 2 - 50, 60), new Vector2(80, 80), 45, Alignment.Center);
+            canv.DrawRoundedRect(new Vector2(canv.Width / 2 + 50, 60), new Vector2(80, 80), 45, Alignment.Center);
+            canv.DrawRoundedRect(new Vector2(canv.Width / 2 + 140, 60), new Vector2(80, 80), 45, Alignment.Center);
 
             canv.DrawTexture(settingsIcon, new Vector2(canv.Width / 2 - 140, 60), new Vector2(60, 60), Alignment.Center);
 
@@ -231,7 +231,8 @@ partial class Program
 
             canv.DrawText("Version: " + games[gameSelected].ver, new Vector2(canv.Width / 2, 300), Alignment.Center);
 
-            DrawModernBox(canv, new Vector2(canv.Width / 2, canv.Height / 2 + 80), new Vector2(500, 150), 45, PRIMARY);
+            canv.Fill(PRIMARY);
+            canv.DrawRoundedRect(new Vector2(canv.Width / 2, canv.Height / 2 + 80), new Vector2(500, 150), 45, Alignment.Center);
 
             canv.Fill(TEXT);
             canv.FontSize(75);
@@ -255,8 +256,9 @@ partial class Program
             canv.Fill(SECONDARY);
             canv.DrawRect(new Vector2(0, 120 + setMenuY), new Vector2(canv.Width, canv.Height), Alignment.TopLeft);
 
-            DrawModernBox(canv, new Vector2(40, setMenuY + 160), new Vector2(50, 50), 45, PRIMARY);
-            DrawModernBox(canv, new Vector2(100, setMenuY + 160), new Vector2(50, 50), 45, PRIMARY);
+            canv.Fill(PRIMARY);
+            canv.DrawRoundedRect(new Vector2(40, setMenuY + 160), new Vector2(50, 50), 45, Alignment.Center);
+            canv.DrawRoundedRect(new Vector2(100, setMenuY + 160), new Vector2(50, 50), 45, Alignment.Center);
 
             canv.Fill(TEXT);
             //canv.Font(smallTxt);
@@ -268,7 +270,8 @@ partial class Program
             canv.FontSize(15);
             canv.DrawText("Pallate: " + pallateName, new Vector2(140, setMenuY + 160), Alignment.CenterLeft);
 
-            DrawModernBox(canv, new Vector2(40, setMenuY + 220), new Vector2(50, 50), 45, PRIMARY);
+            canv.Fill(PRIMARY);
+            canv.DrawRoundedRect(new Vector2(40, setMenuY + 220), new Vector2(50, 50), 45, Alignment.Center);
 
             canv.Fill(TEXT);
             //canv.Font(smallTxt);
@@ -278,7 +281,8 @@ partial class Program
             canv.FontSize(15);
             canv.DrawText("Fullscreen", new Vector2(80, setMenuY + 220), Alignment.CenterLeft);
 
-            DrawModernBox(canv, new Vector2(40, setMenuY + 280), new Vector2(50, 50), 45, PRIMARY);
+            canv.Fill(PRIMARY);
+            canv.DrawRoundedRect(new Vector2(40, setMenuY + 280), new Vector2(50, 50), 45, Alignment.Center);
 
             canv.Fill(TEXT);
             //canv.Font(smallTxt);
@@ -445,19 +449,6 @@ partial class Program
         {
             infoMenuY += (canv.Height - infoMenuY) / 5;
         }
-    }
-
-    static void DrawModernBox(ICanvas canv, Vector2 pos, Vector2 scale, int roundness, Color col)
-    {
-        canv.Fill(col);
-
-        canv.DrawRect(pos, scale - new Vector2(0, roundness), Alignment.Center);
-        canv.DrawRect(pos, scale - new Vector2(roundness, 0), Alignment.Center);
-
-        canv.DrawEllipse(pos + new Vector2(scale.X / 2 - roundness / 2, scale.Y / 2 - roundness / 2), new Vector2(roundness / 2, roundness / 2), Alignment.Center);
-        canv.DrawEllipse(pos + new Vector2(-scale.X / 2 + roundness / 2, scale.Y / 2 - roundness / 2), new Vector2(roundness / 2, roundness / 2), Alignment.Center);
-        canv.DrawEllipse(pos + new Vector2(scale.X / 2 - roundness / 2, -scale.Y / 2 + roundness / 2), new Vector2(roundness / 2, roundness / 2), Alignment.Center);
-        canv.DrawEllipse(pos + new Vector2(-scale.X / 2 + roundness / 2, -scale.Y / 2 + roundness / 2), new Vector2(roundness / 2, roundness / 2), Alignment.Center);
     }
 
     static bool rectPoint(Vector2 rp, Vector2 rs, Vector2 p)
