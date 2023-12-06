@@ -77,6 +77,22 @@ partial class Program
         ver = "0.0 BETA"
     };
 
+    static gameInfo life = new gameInfo
+    {
+        name = "Life",
+        desc = "Life is a simulation of life originally in scratch",
+        updater = new LifeGame().Update,
+        ver = "0.0 BETA"
+    };
+
+    static gameInfo veloc = new gameInfo
+    {
+        name = "Veloc",
+        desc = "Veloc is a 2d platformer game based on momentum",
+        updater = new VelocGame().Update,
+        ver = "0.0 BETA"
+    };
+
     static gameInfo[] games = null;
 
     public static bool gameStarted = false;
@@ -120,7 +136,9 @@ partial class Program
             cells,
             lisk,
             tink,
-            bask
+            bask,
+            life,
+            veloc
         };
     }
 
@@ -130,7 +148,7 @@ partial class Program
         {
             canv.Clear(BG);
 
-            Simulation.SetFixedResolution(1920, 1080, Color.Black, false, false, true);
+            Simulation.SetFixedResolution(1920, 1080, Color.Black, false, false, false);
 
             UpdSep((DateTime.UtcNow - lastItTime).TotalSeconds, Fix);
             lastItTime = DateTime.UtcNow;
