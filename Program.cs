@@ -13,11 +13,17 @@ sim.Run(new DesktopPlatform());
 
 partial class Program
 {
-    static Color BG = Color.Black;
-    static Color TEXT = Color.White;
-    static Color PRIMARY = Color.Gray;
-    static Color SECONDARY = Color.DarkGray;
-    static Color ACCENT = Color.Gray;
+    //color
+
+    static Color BG = new Color(209, 111, 19);
+    static Color BG2 = new Color(252, 176, 35);
+
+    static Color TEXT = new Color(240, 223, 201);
+
+    static Color PRIMARY = new Color(122, 80, 62);
+    static Color SECONDARY = new Color(94, 50, 32);
+
+    //other
 
     static IFont smallTxt = null;
 
@@ -78,6 +84,22 @@ partial class Program
         ver = "0.0 BETA"
     };
 
+    static gameInfo farmlight = new gameInfo
+    {
+        name = "Farmlight",
+        desc = "Farmlight is a 2d farming platformer",
+        updater = new FarmlightGame().Update,
+        ver = "0.0 BETA"
+    };
+
+    static gameInfo linki = new gameInfo
+    {
+        name = "Linki",
+        desc = "Linki is a 3d rendering test",
+        updater = new LinkiGame().Update,
+        ver = "0.0 BETA"
+    };
+
     static gameInfo life = new gameInfo
     {
         name = "Life",
@@ -104,8 +126,6 @@ partial class Program
 
     static bool lightMode = false;
 
-    static ColorManager cm = new ColorManager();
-
     static ITexture settingsIcon = null;
     static ITexture homeIcon = null;
     static ITexture infoIcon = null;
@@ -122,7 +142,7 @@ partial class Program
         infoIcon = Graphics.LoadTexture(@"Assets\Sprites\Menu-InfoIcon.png");
         closeIcon = Graphics.LoadTexture(@"Assets\Sprites\Menu-CloseIcon.png");
 
-        ApplyColors(ref TEXT, ref BG, ref PRIMARY, ref SECONDARY, ref ACCENT, lightMode, pallate, ref pallateName);
+        ApplyColors(ref TEXT, ref BG, ref PRIMARY, ref SECONDARY, ref BG2, lightMode, pallate, ref pallateName);
 
         smallTxt = Graphics.LoadFont(@"Assets\Fonts\Comfortaa-Bold.ttf");
 
@@ -137,7 +157,11 @@ partial class Program
             cells,
             lisk,
             tink,
-            bask
+            bask,
+            linki,
+            farmlight,
+            life,
+            veloc
         };
     }
 
@@ -152,12 +176,12 @@ partial class Program
             UpdSep((DateTime.UtcNow - lastItTime).TotalSeconds, Fix);
             lastItTime = DateTime.UtcNow;
 
-            Gradient g = new LinearGradient(0, 0, canv.Width, canv.Height, new Color[] { BG, SECONDARY });
+            Gradient g = new LinearGradient(0, 0, canv.Width, canv.Height, new Color[] { BG, BG2 });
 
             canv.Fill(g);
             canv.DrawRect(Vector2.Zero, new Vector2(canv.Width, canv.Height));
 
-            canv.Fill(new Color(0, 0, 0, 100));
+            canv.Fill(new Color(0, 0, 0, 150));
             canv.DrawRect(Vector2.Zero, new Vector2(canv.Width, 120));
 
             canv.Fill(PRIMARY);
@@ -256,19 +280,19 @@ partial class Program
             canv.Fill(SECONDARY);
             canv.DrawRect(new Vector2(0, 120 + setMenuY), new Vector2(canv.Width, canv.Height), Alignment.TopLeft);
 
+            canv.FontSize(15);
+            canv.DrawText("Pallate: " + pallateName, new Vector2(140, setMenuY + 160), Alignment.CenterLeft);
+
             canv.Fill(PRIMARY);
             canv.DrawRoundedRect(new Vector2(40, setMenuY + 160), new Vector2(50, 50), 45, Alignment.Center);
-            canv.DrawRoundedRect(new Vector2(100, setMenuY + 160), new Vector2(50, 50), 45, Alignment.Center);
 
             canv.Fill(TEXT);
             //canv.Font(smallTxt);
             canv.FontSize(35);
-            canv.DrawText("+", new Vector2(40, setMenuY + 160), Alignment.Center);
-
-            canv.DrawText("-", new Vector2(100, setMenuY + 160), Alignment.Center);
+            canv.DrawText(fullScreen ? "*" : "-", new Vector2(40, setMenuY + 160), Alignment.Center);
 
             canv.FontSize(15);
-            canv.DrawText("Pallate: " + pallateName, new Vector2(140, setMenuY + 160), Alignment.CenterLeft);
+            canv.DrawText("Fullscreen", new Vector2(80, setMenuY + 160), Alignment.CenterLeft);
 
             canv.Fill(PRIMARY);
             canv.DrawRoundedRect(new Vector2(40, setMenuY + 220), new Vector2(50, 50), 45, Alignment.Center);
@@ -276,21 +300,10 @@ partial class Program
             canv.Fill(TEXT);
             //canv.Font(smallTxt);
             canv.FontSize(35);
-            canv.DrawText(fullScreen ? "*" : "-", new Vector2(40, setMenuY + 220), Alignment.Center);
+            canv.DrawText(vsync ? "*" : "-", new Vector2(40, setMenuY + 220), Alignment.Center);
 
             canv.FontSize(15);
-            canv.DrawText("Fullscreen", new Vector2(80, setMenuY + 220), Alignment.CenterLeft);
-
-            canv.Fill(PRIMARY);
-            canv.DrawRoundedRect(new Vector2(40, setMenuY + 280), new Vector2(50, 50), 45, Alignment.Center);
-
-            canv.Fill(TEXT);
-            //canv.Font(smallTxt);
-            canv.FontSize(35);
-            canv.DrawText(vsync ? "*" : "-", new Vector2(40, setMenuY + 280), Alignment.Center);
-
-            canv.FontSize(15);
-            canv.DrawText("Vsync", new Vector2(80, setMenuY + 280), Alignment.CenterLeft);
+            canv.DrawText("Vsync", new Vector2(80, setMenuY + 220), Alignment.CenterLeft);
 
             if (rectPoint(new Vector2(40, setMenuY + 220), new Vector2(50, 50), Mouse.Position) && settingsOpen)
             {
@@ -307,42 +320,6 @@ partial class Program
                     { Window.EnterFullscreen(); }
                     else
                     { Window.ExitFullscreen(); }
-                }
-            }
-
-            if (rectPoint(new Vector2(40, setMenuY + 160), new Vector2(50, 50), Mouse.Position) && settingsOpen)
-            {
-                if (Mouse.IsButtonPressed(MouseButton.Left))
-                {
-                    if (outs[0].PlaybackState is PlaybackState.Playing) { outs[0].Stop(); }
-                    ins[0].CurrentTime = new TimeSpan(0L);
-                    outs[0].Init(ins[0]);
-                    outs[0].Play();
-
-                    pallate += 1;
-                    pallate = pallate % ColorManager.pallates.Length;
-                    if (pallate < 0)
-                    { pallate = ColorManager.pallates.Length - 1; }
-
-                    ApplyColors(ref TEXT, ref BG, ref PRIMARY, ref SECONDARY, ref ACCENT, lightMode, pallate, ref pallateName);
-                }
-            }
-
-            if (rectPoint(new Vector2(100, setMenuY + 160), new Vector2(50, 50), Mouse.Position) && settingsOpen)
-            {
-                if (Mouse.IsButtonPressed(MouseButton.Left))
-                {
-                    if (outs[0].PlaybackState is PlaybackState.Playing) { outs[0].Stop(); }
-                    ins[0].CurrentTime = new TimeSpan(0L);
-                    outs[0].Init(ins[0]);
-                    outs[0].Play();
-
-                    pallate -= 1;
-                    pallate = pallate % ColorManager.pallates.Length;
-                    if (pallate < 0)
-                    { pallate = ColorManager.pallates.Length - 1; }
-
-                    ApplyColors(ref TEXT, ref BG, ref PRIMARY, ref SECONDARY, ref ACCENT, lightMode, pallate, ref pallateName);
                 }
             }
 
@@ -477,8 +454,6 @@ partial class Program
 
     static void ApplyColors(ref Color txt, ref Color bg, ref Color pri, ref Color sec, ref Color acc, bool light, int pallate, ref string pallatename)
     {
-        cm.ApplyColors(ref txt, ref bg, ref pri, ref sec, ref acc, light, pallate, ref pallatename);
-
         ApplyColorToTex(settingsIcon, txt);
         ApplyColorToTex(homeIcon, txt);
         ApplyColorToTex(infoIcon, txt);

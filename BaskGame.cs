@@ -102,11 +102,15 @@ namespace viylouuInc_Launcher
 
                 makeSmoke(320, 180);
 
+                ICanvas canv = Graphics.GetOutputCanvas();
+
                 started = true;
             }
             else
             {
                 ICanvas canv = Graphics.GetOutputCanvas();
+
+                canv.Antialias(false);
 
                 canv.Clear(Color.Black);
 

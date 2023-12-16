@@ -9,15 +9,6 @@ namespace viylouuInc_Launcher
 {
     internal class tmm
     {
-        public static tile noTile = new tile()
-        { 
-            ssSource = @"Assets\Sprites\tmm Assets\nulltile.png",
-            sssp = Vector2.Zero,
-            ssss = Vector2.One,
-            solid = false,
-            sssid = 0
-        };
-
         public class tile
         {
             public string ssSource { get; set; } //spritesheet source
